@@ -1,4 +1,4 @@
-﻿var AjaxRequest = {
+﻿var AjaxRequest1 = {
     url: ""
     ,
     type: ""
