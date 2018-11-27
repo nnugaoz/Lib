@@ -1,0 +1,3 @@
+﻿function Car() {
+    this.CarNO = "";
+}
