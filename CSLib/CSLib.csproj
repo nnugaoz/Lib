@@ -48,14 +48,15 @@
     <Compile Include="BackEnd\DataTransfer\DataB2F_D.cs" />
     <Compile Include="BackEnd\DB\DBHelper.cs" />
     <Compile Include="BackEnd\DB\EXESQLRET.cs" />
-    <Compile Include="BackEnd\LOG\LOGHelper.cs" />
     <Compile Include="BackEnd\DB\MSSQLHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="BackEnd\LOG\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="FrontEnd\Ajax\AjaxRequest.js" />
   </ItemGroup>

@@ -1,0 +1,33 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Test</title>
+    <script type="text/javascript" src="/Scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+        function AjaxGet() {
+            $.ajax({
+                "type": "get"
+                ,
+                "url": "/Car/HelloWorld"
+                ,
+                "success": function (Data) {
+                    var lData = JSON.parse(Data);
+                    alert(lData.Return);
+                }               
+            }
+                );
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <input type="button" value="Ajax Get" onclick="AjaxGet();" />
+    </div>
+</body>
+</html>

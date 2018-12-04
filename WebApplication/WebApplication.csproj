@@ -147,6 +147,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="Views\Car\Index.cshtml" />
+    <Content Include="Views\Car\Test.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -156,6 +157,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CSLib\CSLib.csproj">
+      <Project>{c99e4dd0-d24b-4ea2-bf17-d640d0e6e651}</Project>
+      <Name>CSLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

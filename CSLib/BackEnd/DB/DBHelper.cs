@@ -33,8 +33,8 @@ namespace CSLib
             }
             catch (Exception ex)
             {
-                LOGHelper.ErrorLog("DBHelper", "GetDataTable", sql);
-                LOGHelper.ErrorLog("DBHelper", "GetDataTable", ex.ToString());
+                //LOGHelper.ErrorLog("DBHelper", "GetDataTable", sql);
+                //LOGHelper.ErrorLog("DBHelper", "GetDataTable", ex.ToString());
                 return EXESQLRET.ERROR;
             }
         }
@@ -59,8 +59,8 @@ namespace CSLib
             }
             catch (Exception ex)
             {
-                LOGHelper.ErrorLog("DBHelper", "ExecuteSQL", sql);
-                LOGHelper.ErrorLog("DBHelper", "ExecuteSQL", ex.ToString());
+                //LOGHelper.ErrorLog("DBHelper", "ExecuteSQL", sql);
+                //LOGHelper.ErrorLog("DBHelper", "ExecuteSQL", ex.ToString());
                 return EXESQLRET.ERROR;
             }
         }
