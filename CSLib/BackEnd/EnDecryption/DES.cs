@@ -11,8 +11,8 @@ namespace CSLib.BackEnd.EnDecryption
     public class DES
     {
         //注意了，是8个字符，64位
-        public string KEY_64 = "NTCHHLAQ";
-        public string IV_64 = "NTCH2018";
+        public string KEY_64 = "NTCH2006";
+        public string IV_64 = "SOFTWARE";
 
         /// <summary>
         /// 64位加密

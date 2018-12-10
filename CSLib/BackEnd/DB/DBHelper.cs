@@ -10,7 +10,7 @@ namespace CSLib
     public class DBHelper
     {
 
-        private static MSSQLHelper mMSSQLHelper = new MSSQLHelper("");
+        private static MSSQLHelper mMSSQLHelper = new MSSQLHelper();
 
         public static EXESQLRET GetDataTable(string sql, ref DataTable dt)
         {
@@ -33,8 +33,6 @@ namespace CSLib
             }
             catch (Exception ex)
             {
-                //LOGHelper.ErrorLog("DBHelper", "GetDataTable", sql);
-                //LOGHelper.ErrorLog("DBHelper", "GetDataTable", ex.ToString());
                 return EXESQLRET.ERROR;
             }
         }
@@ -59,8 +57,6 @@ namespace CSLib
             }
             catch (Exception ex)
             {
-                //LOGHelper.ErrorLog("DBHelper", "ExecuteSQL", sql);
-                //LOGHelper.ErrorLog("DBHelper", "ExecuteSQL", ex.ToString());
                 return EXESQLRET.ERROR;
             }
         }

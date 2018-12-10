@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CSLib.BackEnd.EnDecryption;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
@@ -12,7 +13,9 @@ namespace CSLib
 
         public MSSQLHelper()
         {
-            mConnString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString_MSSQL"].ConnectionString;
+            DES lDES = new DES();
+
+            mConnString = lDES.Decode(System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString_MSSQL"].ConnectionString);
         }
 
         public MSSQLHelper(String pConnString)
