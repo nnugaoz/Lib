@@ -1,0 +1,40 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>List</title>
+    <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $.ajax({
+                "timeout": "60000",
+                "type": "get",
+                "url": "/Order/GetListData",
+                "success": function (pData, pStatusText) {
+                    alert("success " + pData);
+                    alert("success " + pStatusText);
+                },
+                "error": function (pXhr, pStatusText) {
+                    alert("error " + pXhr);
+                    alert("error " + pStatusText);
+                },
+                "complete": function (pXhr, pStatusText) {
+                    alert("complete " + pXhr);
+                    alert("complete " + pStatusText);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div>
+        <h1>Order List</h1>
+    </div>
+</body>
+</html>

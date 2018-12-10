@@ -50,6 +50,7 @@
     <Compile Include="BackEnd\DB\EXESQLRET.cs" />
     <Compile Include="BackEnd\DB\MSSQLHelper.cs" />
     <Compile Include="BackEnd\EnDecryption\DES.cs" />
+    <Compile Include="BackEnd\JSon\ConvertToJson.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
