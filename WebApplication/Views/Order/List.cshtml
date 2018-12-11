@@ -9,12 +9,91 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>List</title>
+    <link type="text/css" rel="stylesheet" href="~/Content/bootstrap.min.css" />
     <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="~/Scripts/MyJsLib/MyJsLib.js"></script>
     <script type="text/javascript">
         $(function () {
             MyAjax({
-                "url": "/Order/GetListData", "fnSuccess": function () { }
+                "url": "/Order/GetListData"
+                , "fnSuccess": function (pData) {
+                    var lData = JSON.parse(pData);
+                    var lListHtml = "";
+                    var lRowCount = 0;
+                    var lPageSize = 10;
+                    lListHtml = "<table class='table table-bordered table-hover table-striped'>";
+                    lListHtml += "<tr>";
+                    lListHtml += "<th>";
+                    lListHtml += "订单编号";
+                    lListHtml += "</th>";
+                    lListHtml += "<th>";
+                    lListHtml += "客商编号";
+                    lListHtml += "</th>";
+                    lListHtml += "<th>";
+                    lListHtml += "经销商编号";
+                    lListHtml += "</th>";
+                    lListHtml += "<th>";
+                    lListHtml += "下单日期";
+                    lListHtml += "</th>";
+                    lListHtml += "<th>";
+                    lListHtml += "下单人";
+                    lListHtml += "</th>";
+                    lListHtml += "<th>";
+                    lListHtml += "收货地址";
+                    lListHtml += "</th>";
+                    lListHtml += "<th>";
+                    lListHtml += "预计发货日期";
+                    lListHtml += "</th>";
+                    lListHtml += "<th>";
+                    lListHtml += "订单金额";
+                    lListHtml += "</th>";
+                    lListHtml += "<th>";
+                    lListHtml += "开票金额";
+                    lListHtml += "</th>";
+                    lListHtml += "</tr>";
+                    for (var i = 0; i < lData.length; i++) {
+                        lRowCount = lData[i].RowCnt;
+                        lListHtml += "<tr>";
+                        lListHtml += "<td>";
+                        lListHtml += lData[i].ID;
+                        lListHtml += "</td>";
+                        lListHtml += "<td>";
+                        lListHtml += lData[i].CustomerCode;
+                        lListHtml += "</td>";
+                        lListHtml += "<td>";
+                        lListHtml += lData[i].DistributorCode;
+                        lListHtml += "</td>";
+                        lListHtml += "<td>";
+                        lListHtml += lData[i].SubmitDate;
+                        lListHtml += "</td>";
+                        lListHtml += "<td>";
+                        lListHtml += lData[i].SubmitMan;
+                        lListHtml += "</td>";
+                        lListHtml += "<td>";
+                        lListHtml += lData[i].RecAddress;
+                        lListHtml += "</td>";
+                        lListHtml += "<td>";
+                        lListHtml += lData[i].DeliveryDate;
+                        lListHtml += "</td>";
+                        lListHtml += "<td>";
+                        lListHtml += lData[i].Money;
+                        lListHtml += "</td>";
+                        lListHtml += "<td>";
+                        lListHtml += lData[i].InvoiceMoney;
+                        lListHtml += "</td>";
+                        lListHtml += "</tr>";
+                    }
+                    lListHtml += "</table>";
+
+                    $("#divList").html(lListHtml);
+
+                    //分页
+                    var lPageIndexHtml = "";
+                    for (var i = 0; i < Math.ceil(lRowCount / lPageSize) ; i++) {
+                        lPageIndexHtml += i + "&nbsp;";
+                    }
+                    $("#divPageIndex").html(lPageIndexHtml);
+                }
             });
         });
     </script>
@@ -22,6 +101,12 @@
 <body>
     <div>
         <h1>Order List</h1>
+        <div id="divList" style="margin:10px;">
+
+        </div>
+        <div id="divPageIndex" style="margin:10px">
+
+        </div>
     </div>
 </body>
 </html>

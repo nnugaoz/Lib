@@ -21,8 +21,14 @@ namespace WebApplication.Controllers
         {
             String lDataInJsonStr = "";
             String lSQL = "";
+            lSQL += "DECLARE @Count INT";
+            lSQL += "       SELECT @Count=COUNT(1)";
+            lSQL += "       FROM";
+            lSQL += "       T_Order;";
+
             lSQL += "SELECT TOP(10)";
-            lSQL += "       ID";
+            lSQL += "     @Count RowCnt";
+            lSQL += "     , ID";
             lSQL += "     , CustomerCode";
             lSQL += "     , DistributorCode";
             lSQL += "     , SubmitDate";
@@ -31,7 +37,7 @@ namespace WebApplication.Controllers
             lSQL += "     , DeliveryDate";
             lSQL += "     , Money";
             lSQL += "     , InvoiceMoney";
-            lSQL += " FROM";
+            lSQL += "     FROM";
             lSQL += "       T_Order";
             DataTable lDT = null;
             if (DBHelper.GetDataTable(lSQL, ref lDT) == EXESQLRET.SUCCESS)

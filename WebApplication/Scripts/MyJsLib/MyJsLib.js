@@ -1,21 +1,21 @@
 ﻿function MyAjax(pAjaxParam) {
     $.ajax({
         "type": "get",
-        "timeout": "6000",
+        "timeout": "60000",
         "url": pAjaxParam.url,
         "data": pAjaxParam.data,
         "success": function (pData, pStatusText) {
-            alert(pData);
-            alert(pStatusText);
-            pAjaxParam.fnSuccess();
+            //alert("success " + pData);
+            //alert("success " + pStatusText);
+            pAjaxParam.fnSuccess(pData);
         },
         "error": function (pXHR, pStatusText) {
-            alert(pXHR);
-            alert(pStatusText);
+            alert("error " + pXHR);
+            alert("error " + pStatusText);
         },
         "complete": function (pXHR, pStatusText) {
-            alert(pXHR);
-            alert(pStatusText);
+            //alert("complete " + pXHR);
+            //alert("complete " + pStatusText);
         }
     });
 }
