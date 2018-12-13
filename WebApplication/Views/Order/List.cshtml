@@ -9,10 +9,16 @@
     <meta name="viewport" content="width=device-width" />
     <title>List</title>
     <link type="text/css" rel="stylesheet" href="~/Content/bootstrap.min.css" />
+
     <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="~/Content/layer/layer.js"></script>
     <script type="text/javascript" src="~/Scripts/MyJsLib/MyJsLib.js"></script>
+
     <script type="text/javascript">
         $(function () {
+            //加载层
+            var index = layer.load(0, { shade: false }); //0代表加载的风格，支持0-2
+
             MyAjax({
                 "url": "/Order/GetListData"
                 , "fnSuccess": function (pData) {
@@ -106,6 +112,7 @@
                     lPageIndexHtml += "  </ul>";
                     lPageIndexHtml += "</nav>";
                     $("#divPageIndex").html(lPageIndexHtml);
+                    layer.close(index);
                 }
             });
         });
