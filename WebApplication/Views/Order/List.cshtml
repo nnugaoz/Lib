@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
 
@@ -89,9 +88,23 @@
 
                     //分页
                     var lPageIndexHtml = "";
-                    for (var i = 0; i < Math.ceil(lRowCount / lPageSize) ; i++) {
-                        lPageIndexHtml += i + "&nbsp;";
+                    lPageIndexHtml += "<nav aria-label='Page navigation'>";
+                    lPageIndexHtml += "  <ul class='pagination'>";
+                    lPageIndexHtml += "    <li>";
+                    lPageIndexHtml += "      <a href='#' aria-label='Previous'>";
+                    lPageIndexHtml += "        <span aria-hidden='true'>&laquo;</span>";
+                    lPageIndexHtml += "      </a>";
+                    lPageIndexHtml += "    </li>";
+                    for (var i = 1; i <= Math.ceil(lRowCount / lPageSize) ; i++) {
+                        lPageIndexHtml += "<li><a href='#'>" + i + "</a></li>";
                     }
+                    lPageIndexHtml += "    <li>";
+                    lPageIndexHtml += "      <a href='#' aria-label='Next'>";
+                    lPageIndexHtml += "        <span aria-hidden='true'>&raquo;</span>";
+                    lPageIndexHtml += "      </a>";
+                    lPageIndexHtml += "    </li>";
+                    lPageIndexHtml += "  </ul>";
+                    lPageIndexHtml += "</nav>";
                     $("#divPageIndex").html(lPageIndexHtml);
                 }
             });
