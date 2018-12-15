@@ -11,6 +11,8 @@ namespace CSLib
     {
 
         private static MSSQLHelper mMSSQLHelper = new MSSQLHelper();
+        private static readonly log4net.ILog log
+= log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public static EXESQLRET GetDataTable(string sql, ref DataTable dt)
         {
@@ -33,6 +35,7 @@ namespace CSLib
             }
             catch (Exception ex)
             {
+                log.Error(ex);
                 return EXESQLRET.ERROR;
             }
         }
@@ -57,6 +60,7 @@ namespace CSLib
             }
             catch (Exception ex)
             {
+                log.Debug(ex);
                 return EXESQLRET.ERROR;
             }
         }
