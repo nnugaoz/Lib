@@ -36,6 +36,7 @@ namespace CSLib
             catch (Exception ex)
             {
                 log.Error(ex);
+                log.Error(sql);
                 return EXESQLRET.ERROR;
             }
         }
@@ -61,6 +62,7 @@ namespace CSLib
             catch (Exception ex)
             {
                 log.Debug(ex);
+                log.Error(sql);
                 return EXESQLRET.ERROR;
             }
         }
