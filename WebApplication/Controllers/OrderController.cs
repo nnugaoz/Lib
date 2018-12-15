@@ -11,13 +11,16 @@ namespace WebApplication.Controllers
 {
     public class OrderController : Controller
     {
+        private static readonly log4net.ILog log
+= log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         // GET: Order
         public ActionResult List()
         {
             return View();
         }
 
-        public String GetListData()
+        public String GetListData(string begin_index, string end_index)
         {
             String lDataInJsonStr = "";
             String lSQL = "";
@@ -26,8 +29,10 @@ namespace WebApplication.Controllers
             lSQL += "       FROM";
             lSQL += "       T_Order;";
 
-            lSQL += "SELECT TOP(10)";
+            lSQL += "SELECT * FROM(";
+            lSQL += "SELECT ";
             lSQL += "     @Count RowCnt";
+            lSQL += "     , ROW_NUMBER()OVER(ORDER BY ID) SNO";
             lSQL += "     , ID";
             lSQL += "     , CustomerCode";
             lSQL += "     , DistributorCode";
@@ -39,11 +44,15 @@ namespace WebApplication.Controllers
             lSQL += "     , InvoiceMoney";
             lSQL += "     FROM";
             lSQL += "       T_Order";
+            lSQL += ")T";
+            lSQL += " WHERE SNO >= " + begin_index + " AND SNO <= " + end_index;
+
             DataTable lDT = null;
             if (DBHelper.GetDataTable(lSQL, ref lDT) == EXESQLRET.SUCCESS)
             {
                 lDataInJsonStr = ConvertToJson.FromDataTable(lDT);
             }
+            log.Debug(lDataInJsonStr);
             return lDataInJsonStr;
         }
     }

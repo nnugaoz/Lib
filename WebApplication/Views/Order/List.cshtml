@@ -16,106 +16,127 @@
 
     <script type="text/javascript">
         $(function () {
+            GetData(1);
+        });
+
+        function GetData(page_index) {
             //加载层
             var index = layer.load(0, { shade: false }); //0代表加载的风格，支持0-2
+            var begin_index = 0;
+            var end_index = 0;
+            var page_size = 5;
+            var row_count = 0;
+            begin_index = (page_index - 1) * page_size + 1;
+            end_index = page_index * page_size;
 
             MyAjax({
                 "url": "/Order/GetListData"
-                , "fnSuccess": function (pData) {
-                    var lData = JSON.parse(pData);
-                    var lListHtml = "";
-                    var lRowCount = 0;
-                    var lPageSize = 10;
-                    lListHtml = "<table class='table table-bordered table-hover table-striped'>";
-                    lListHtml += "<tr>";
-                    lListHtml += "<th>";
-                    lListHtml += "订单编号";
-                    lListHtml += "</th>";
-                    lListHtml += "<th>";
-                    lListHtml += "客商编号";
-                    lListHtml += "</th>";
-                    lListHtml += "<th>";
-                    lListHtml += "经销商编号";
-                    lListHtml += "</th>";
-                    lListHtml += "<th>";
-                    lListHtml += "下单日期";
-                    lListHtml += "</th>";
-                    lListHtml += "<th>";
-                    lListHtml += "下单人";
-                    lListHtml += "</th>";
-                    lListHtml += "<th>";
-                    lListHtml += "收货地址";
-                    lListHtml += "</th>";
-                    lListHtml += "<th>";
-                    lListHtml += "预计发货日期";
-                    lListHtml += "</th>";
-                    lListHtml += "<th>";
-                    lListHtml += "订单金额";
-                    lListHtml += "</th>";
-                    lListHtml += "<th>";
-                    lListHtml += "开票金额";
-                    lListHtml += "</th>";
-                    lListHtml += "</tr>";
-                    for (var i = 0; i < lData.length; i++) {
-                        lRowCount = lData[i].RowCnt;
+                ,
+                "data": { "begin_index": begin_index, "end_index": end_index }
+                ,
+                "fnSuccess": function (pData) {
+                    try {
+                        var lData = JSON.parse(pData);
+                        var lListHtml = "";
+
+                        lListHtml = "<table class='table table-bordered table-hover table-striped'>";
                         lListHtml += "<tr>";
-                        lListHtml += "<td>";
-                        lListHtml += lData[i].ID;
-                        lListHtml += "</td>";
-                        lListHtml += "<td>";
-                        lListHtml += lData[i].CustomerCode;
-                        lListHtml += "</td>";
-                        lListHtml += "<td>";
-                        lListHtml += lData[i].DistributorCode;
-                        lListHtml += "</td>";
-                        lListHtml += "<td>";
-                        lListHtml += lData[i].SubmitDate;
-                        lListHtml += "</td>";
-                        lListHtml += "<td>";
-                        lListHtml += lData[i].SubmitMan;
-                        lListHtml += "</td>";
-                        lListHtml += "<td>";
-                        lListHtml += lData[i].RecAddress;
-                        lListHtml += "</td>";
-                        lListHtml += "<td>";
-                        lListHtml += lData[i].DeliveryDate;
-                        lListHtml += "</td>";
-                        lListHtml += "<td>";
-                        lListHtml += lData[i].Money;
-                        lListHtml += "</td>";
-                        lListHtml += "<td>";
-                        lListHtml += lData[i].InvoiceMoney;
-                        lListHtml += "</td>";
+                        lListHtml += "<th>";
+                        lListHtml += "订单编号";
+                        lListHtml += "</th>";
+                        lListHtml += "<th>";
+                        lListHtml += "客商编号";
+                        lListHtml += "</th>";
+                        lListHtml += "<th>";
+                        lListHtml += "经销商编号";
+                        lListHtml += "</th>";
+                        lListHtml += "<th>";
+                        lListHtml += "下单日期";
+                        lListHtml += "</th>";
+                        lListHtml += "<th>";
+                        lListHtml += "下单人";
+                        lListHtml += "</th>";
+                        lListHtml += "<th>";
+                        lListHtml += "收货地址";
+                        lListHtml += "</th>";
+                        lListHtml += "<th>";
+                        lListHtml += "预计发货日期";
+                        lListHtml += "</th>";
+                        lListHtml += "<th>";
+                        lListHtml += "订单金额";
+                        lListHtml += "</th>";
+                        lListHtml += "<th>";
+                        lListHtml += "开票金额";
+                        lListHtml += "</th>";
                         lListHtml += "</tr>";
-                    }
-                    lListHtml += "</table>";
+                        for (var i = 0; i < lData.length; i++) {
+                            row_count = lData[i].RowCnt;
+                            lListHtml += "<tr>";
+                            lListHtml += "<td>";
+                            lListHtml += lData[i].ID;
+                            lListHtml += "</td>";
+                            lListHtml += "<td>";
+                            lListHtml += lData[i].CustomerCode;
+                            lListHtml += "</td>";
+                            lListHtml += "<td>";
+                            lListHtml += lData[i].DistributorCode;
+                            lListHtml += "</td>";
+                            lListHtml += "<td>";
+                            lListHtml += lData[i].SubmitDate;
+                            lListHtml += "</td>";
+                            lListHtml += "<td>";
+                            lListHtml += lData[i].SubmitMan;
+                            lListHtml += "</td>";
+                            lListHtml += "<td>";
+                            lListHtml += lData[i].RecAddress;
+                            lListHtml += "</td>";
+                            lListHtml += "<td>";
+                            lListHtml += lData[i].DeliveryDate;
+                            lListHtml += "</td>";
+                            lListHtml += "<td>";
+                            lListHtml += lData[i].Money;
+                            lListHtml += "</td>";
+                            lListHtml += "<td>";
+                            lListHtml += lData[i].InvoiceMoney;
+                            lListHtml += "</td>";
+                            lListHtml += "</tr>";
+                        }
+                        lListHtml += "</table>";
 
-                    $("#divList").html(lListHtml);
+                        $("#divList").html(lListHtml);
 
-                    //分页
-                    var lPageIndexHtml = "";
-                    lPageIndexHtml += "<nav aria-label='Page navigation'>";
-                    lPageIndexHtml += "  <ul class='pagination'>";
-                    lPageIndexHtml += "    <li>";
-                    lPageIndexHtml += "      <a href='#' aria-label='Previous'>";
-                    lPageIndexHtml += "        <span aria-hidden='true'>&laquo;</span>";
-                    lPageIndexHtml += "      </a>";
-                    lPageIndexHtml += "    </li>";
-                    for (var i = 1; i <= Math.ceil(lRowCount / lPageSize) ; i++) {
-                        lPageIndexHtml += "<li><a href='#'>" + i + "</a></li>";
+                        //分页
+                        var lPageIndexHtml = "";
+                        lPageIndexHtml += "<nav aria-label='Page navigation'>";
+                        lPageIndexHtml += "  <ul class='pagination'>";
+                        lPageIndexHtml += "    <li>";
+                        lPageIndexHtml += "      <a href='#' onclick='GetData(" + (i - 1) + ");' aria-label='Previous'>";
+                        lPageIndexHtml += "        <span aria-hidden='true'>&laquo;</span>";
+                        lPageIndexHtml += "      </a>";
+                        lPageIndexHtml += "    </li>";
+                        for (var i = 1; i <= Math.ceil(row_count / page_size) ; i++) {
+                            if (i == page_index) {
+                                lPageIndexHtml += "<li class='active'><a href='#' onclick='GetData(" + i + ");'>" + i + "</a></li>";
+                            }
+                            else {
+                                lPageIndexHtml += "<li><a href='#' onclick='GetData(" + i + ");'>" + i + "</a></li>";
+                            }
+                        }
+                        lPageIndexHtml += "    <li>";
+                        lPageIndexHtml += "      <a href='#' onclick='GetData(" + (i + 1) + ");' aria-label='Next'>";
+                        lPageIndexHtml += "        <span aria-hidden='true'>&raquo;</span>";
+                        lPageIndexHtml += "      </a>";
+                        lPageIndexHtml += "    </li>";
+                        lPageIndexHtml += "  </ul>";
+                        lPageIndexHtml += "</nav>";
+                        $("#divPageIndex").html(lPageIndexHtml);
+                    } catch (err) {
+                        layer.alert(err.message, { icon: 5 });
                     }
-                    lPageIndexHtml += "    <li>";
-                    lPageIndexHtml += "      <a href='#' aria-label='Next'>";
-                    lPageIndexHtml += "        <span aria-hidden='true'>&raquo;</span>";
-                    lPageIndexHtml += "      </a>";
-                    lPageIndexHtml += "    </li>";
-                    lPageIndexHtml += "  </ul>";
-                    lPageIndexHtml += "</nav>";
-                    $("#divPageIndex").html(lPageIndexHtml);
                     layer.close(index);
                 }
             });
-        });
+        }
     </script>
 </head>
 <body>
