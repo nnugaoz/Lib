@@ -24,7 +24,7 @@
             var index = layer.load(0, { shade: false }); //0代表加载的风格，支持0-2
             var begin_index = 0;
             var end_index = 0;
-            var page_size = 5;
+            var page_size = 15;
             var row_count = 0;
             begin_index = (page_index - 1) * page_size + 1;
             end_index = page_index * page_size;
@@ -105,37 +105,132 @@
 
                         $("#divList").html(lListHtml);
 
-                        //分页
-                        var lPageIndexHtml = "";
-                        lPageIndexHtml += "<nav aria-label='Page navigation'>";
-                        lPageIndexHtml += "  <ul class='pagination'>";
-                        lPageIndexHtml += "    <li>";
-                        lPageIndexHtml += "      <a href='#' onclick='GetData(" + (i - 1) + ");' aria-label='Previous'>";
-                        lPageIndexHtml += "        <span aria-hidden='true'>&laquo;</span>";
-                        lPageIndexHtml += "      </a>";
-                        lPageIndexHtml += "    </li>";
-                        for (var i = 1; i <= Math.ceil(row_count / page_size) ; i++) {
-                            if (i == page_index) {
-                                lPageIndexHtml += "<li class='active'><a href='#' onclick='GetData(" + i + ");'>" + i + "</a></li>";
-                            }
-                            else {
-                                lPageIndexHtml += "<li><a href='#' onclick='GetData(" + i + ");'>" + i + "</a></li>";
-                            }
-                        }
-                        lPageIndexHtml += "    <li>";
-                        lPageIndexHtml += "      <a href='#' onclick='GetData(" + (i + 1) + ");' aria-label='Next'>";
-                        lPageIndexHtml += "        <span aria-hidden='true'>&raquo;</span>";
-                        lPageIndexHtml += "      </a>";
-                        lPageIndexHtml += "    </li>";
-                        lPageIndexHtml += "  </ul>";
-                        lPageIndexHtml += "</nav>";
-                        $("#divPageIndex").html(lPageIndexHtml);
+                        //生成分页HTML
+                        GeneratePageIndexHtml(row_count, page_size, page_index);
                     } catch (err) {
                         layer.alert(err.message, { icon: 5 });
                     }
                     layer.close(index);
                 }
             });
+        }
+
+        //生成分页HTML
+        //row_count:记录条数
+        //page_size:页面记录数
+        //page_index:当前页下标
+        function GeneratePageIndexHtml(row_count, page_size, page_index) {
+            var lPageIndexHtml = "";
+            //page_count:页数
+            var page_count = Math.ceil(row_count / page_size);
+
+            lPageIndexHtml += "<nav aria-label='Page navigation'>";
+            lPageIndexHtml += "  <ul class='pagination'>";
+
+            //上一页
+            //如果当前页下标是1，即第一页，则上一页不可用
+            if (page_index == 1) {
+                lPageIndexHtml += "    <li class='disabled'>";
+                lPageIndexHtml += "      <a href='#' aria-label='Previous'>";
+                lPageIndexHtml += "        <span aria-hidden='true'>&laquo;</span>";
+                lPageIndexHtml += "      </a>";
+                lPageIndexHtml += "    </li>";
+            }
+            else {
+                lPageIndexHtml += "    <li>";
+                lPageIndexHtml += "      <a href='#' onclick='GetData(" + (page_index - 1) + ");' aria-label='Previous'>";
+                lPageIndexHtml += "        <span aria-hidden='true'>&laquo;</span>";
+                lPageIndexHtml += "      </a>";
+                lPageIndexHtml += "    </li>";
+            }
+
+            //第一页到当前页HTML
+            if (page_index - 1 >= 5) {
+                lPageIndexHtml += "    <li>";
+                lPageIndexHtml += "      <a href='#' onclick='GetData(1);' aria-label='Previous'>";
+                lPageIndexHtml += "        <span aria-hidden='true'>1</span>";
+                lPageIndexHtml += "      </a>";
+                lPageIndexHtml += "    </li>";
+                lPageIndexHtml += "    <li>";
+                lPageIndexHtml += "      <a href='#' onclick='GetData(" + (page_index - 4) + ");' aria-label='Previous'>";
+                lPageIndexHtml += "        <span aria-hidden='true'>...</span>";
+                lPageIndexHtml += "      </a>";
+                lPageIndexHtml += "    </li>";
+                lPageIndexHtml += "    <li>";
+                lPageIndexHtml += "      <a href='#' onclick='GetData(" + (page_index - 2) + ");' aria-label='Previous'>";
+                lPageIndexHtml += "        <span aria-hidden='true'>" + (page_index - 2) + "</span>";
+                lPageIndexHtml += "      </a>";
+                lPageIndexHtml += "    </li>";
+                lPageIndexHtml += "    <li>";
+                lPageIndexHtml += "      <a href='#' onclick='GetData(" + (page_index - 1) + ");' aria-label='Previous'>";
+                lPageIndexHtml += "        <span aria-hidden='true'>" + (page_index - 1) + "</span>";
+                lPageIndexHtml += "      </a>";
+                lPageIndexHtml += "    </li>";
+                lPageIndexHtml += "    <li class='active'>";
+                lPageIndexHtml += "      <a href='#' onclick='GetData(" + page_index + ");' aria-label='Previous'>";
+                lPageIndexHtml += "        <span aria-hidden='true'>" + page_index + "</span>";
+                lPageIndexHtml += "      </a>";
+                lPageIndexHtml += "    </li>";
+            }
+            else {
+                for (var i = 1; i <= page_index ; i++) {
+                    if (i == page_index) {
+                        lPageIndexHtml += "<li class='active'><a href='#' onclick='GetData(" + i + ");'>" + i + "</a></li>";
+                    }
+                    else {
+                        lPageIndexHtml += "<li><a href='#' onclick='GetData(" + i + ");'>" + i + "</a></li>";
+                    }
+                }
+            }
+
+            //当前页到最后一页HTML
+            if (page_count - page_index >= 5) {
+                lPageIndexHtml += "    <li>";
+                lPageIndexHtml += "      <a href='#' onclick='GetData(" + (page_index + 1) + ");' aria-label='Previous'>";
+                lPageIndexHtml += "        <span aria-hidden='true'>" + (page_index + 1) + "</span>";
+                lPageIndexHtml += "      </a>";
+                lPageIndexHtml += "    </li>";
+                lPageIndexHtml += "    <li>";
+                lPageIndexHtml += "      <a href='#' onclick='GetData(" + (page_index + 2) + ");' aria-label='Previous'>";
+                lPageIndexHtml += "        <span aria-hidden='true'>" + (page_index + 2) + "</span>";
+                lPageIndexHtml += "      </a>";
+                lPageIndexHtml += "    </li>";
+                lPageIndexHtml += "    <li>";
+                lPageIndexHtml += "      <a href='#' onclick='GetData(" + (page_index + 4) + ");' aria-label='Previous'>";
+                lPageIndexHtml += "        <span aria-hidden='true'>...</span>";
+                lPageIndexHtml += "      </a>";
+                lPageIndexHtml += "    </li>";
+                lPageIndexHtml += "    <li>";
+                lPageIndexHtml += "      <a href='#' onclick='GetData(" + page_count + ");' aria-label='Previous'>";
+                lPageIndexHtml += "        <span aria-hidden='true'>" + page_count + "</span>";
+                lPageIndexHtml += "      </a>";
+                lPageIndexHtml += "    </li>";
+            }
+            else {
+                for (var i = page_index + 1; i <= page_count ; i++) {
+                    lPageIndexHtml += "<li><a href='#' onclick='GetData(" + i + ");'>" + i + "</a></li>";
+                }
+            }
+
+            //如果当前页下标是page_count，即最后一页，则下一页不可用
+            if (page_index == page_count) {
+                lPageIndexHtml += "    <li class='disabled'>";
+                lPageIndexHtml += "      <a href='#' aria-label='Next'>";
+                lPageIndexHtml += "        <span aria-hidden='true'>&raquo;</span>";
+                lPageIndexHtml += "      </a>";
+                lPageIndexHtml += "    </li>";
+            }
+            else {
+                lPageIndexHtml += "    <li>";
+                lPageIndexHtml += "      <a href='#' onclick='GetData(" + (page_index + 1) + ");' aria-label='Next'>";
+                lPageIndexHtml += "        <span aria-hidden='true'>&raquo;</span>";
+                lPageIndexHtml += "      </a>";
+                lPageIndexHtml += "    </li>";
+            }
+
+            lPageIndexHtml += "  </ul>";
+            lPageIndexHtml += "</nav>";
+            $("#divPageIndex").html(lPageIndexHtml);
         }
     </script>
 </head>
