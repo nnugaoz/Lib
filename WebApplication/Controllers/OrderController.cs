@@ -52,7 +52,6 @@ namespace WebApplication.Controllers
             {
                 lDataInJsonStr = ConvertToJson.FromDataTable(lDT);
             }
-            log.Debug(lDataInJsonStr);
             return lDataInJsonStr;
         }
     }
