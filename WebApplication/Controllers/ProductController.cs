@@ -18,21 +18,32 @@ namespace WebApplication.Controllers
             return View();
         }
 
-        public String GetListData()
+        public String GetListData(String begin_index, String end_index)
         {
             String lJsonStr = "";
             String lSQL = "";
             DataTable lDT = null;
-
-            lSQL = "SELECT TOP (100)";
-            lSQL += " Code";
-            lSQL += ", Name";
-            lSQL += ", ShortName";
-            lSQL += ", Type";
-            lSQL += ", Voltage";
-            lSQL += ", Spec";
-            lSQL += ", ClassID";
-            lSQL += " FROM T_Product";
+            lSQL += "DECLARE";
+            lSQL += "    @RowCount INT";
+            lSQL += "    SELECT";
+            lSQL += "           @RowCount=COUNT(1)";
+            lSQL += "    FROM";
+            lSQL += "           T_Product";
+            lSQL += "   SELECT * FROM(";
+            lSQL += "        SELECT";
+            lSQL += "               @RowCount RCount";
+            lSQL += "             , ROW_NUMBER()OVER(ORDER BY Code) i";
+            lSQL += "             , Code";
+            lSQL += "             , Name";
+            lSQL += "             , ShortName";
+            lSQL += "             , Type";
+            lSQL += "             , Voltage";
+            lSQL += "             , Spec";
+            lSQL += "             , ClassID";
+            lSQL += "        FROM";
+            lSQL += "               T_Product)T";
+            lSQL += "   WHERE i>=" + begin_index + " AND i<=" + end_index;
+            
 
             if (DBHelper.GetDataTable(lSQL, ref lDT) == EXESQLRET.SUCCESS)
             {

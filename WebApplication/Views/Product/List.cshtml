@@ -15,62 +15,140 @@
     <script type="text/javascript" src="~/Scripts/MyJsLib/MyJsLib.js"></script>
     <script type="text/javascript">
         $(function () {
+            GetData(1);
+        });
+
+        function GetData(page_index) {
             var index = layer.load(2, { shade: "true" });
+            var row_count = 0;
+            var page_size = 10;
+            var begin_index = (page_index - 1) * page_size + 1;
+            var end_index = page_index * page_size;
+
             MyAjax({
                 "url": "/Product/GetListData"
                 ,
+                "data": { "begin_index": begin_index, "end_index": end_index }
+                ,
                 "fnSuccess": function (pData) {
-                    var lData = JSON.parse(pData);
-                    var lProductListHtml = "";
-                    lProductListHtml = '<table class="table table-bordered table-hover table-striped">';
-                    lProductListHtml += '<tr>';
-                    lProductListHtml += '<th>产品编码</th>';
-                    lProductListHtml += '<th>产品全称</th>';
-                    lProductListHtml += '<th>产品简称</th>';
-                    lProductListHtml += '<th>产品类型</th>';
-                    lProductListHtml += '<th>电压等级</th>';
-                    lProductListHtml += '<th>产品规格</th>';
-                    lProductListHtml += '<th>产品分类编码</th>';
-                    lProductListHtml += '</tr>';
-
-                    for (var i = 0; i < lData.length; i++) {
+                    try {
+                        var lData = JSON.parse(pData);
+                        var lProductListHtml = "";
+                        lProductListHtml = '<table class="table table-bordered table-hover table-striped">';
                         lProductListHtml += '<tr>';
-                        lProductListHtml += '<td>';
-                        lProductListHtml += lData[i].Code;
-                        lProductListHtml += '</td>';
-                        lProductListHtml += '<td>';
-                        lProductListHtml += lData[i].Name;
-                        lProductListHtml += '</td>';
-                        lProductListHtml += '<td>';
-                        lProductListHtml += lData[i].ShortName;
-                        lProductListHtml += '</td>';
-                        lProductListHtml += '<td>';
-                        lProductListHtml += lData[i].Type;
-                        lProductListHtml += '</td>';
-                        lProductListHtml += '<td>';
-                        lProductListHtml += lData[i].Voltage;
-                        lProductListHtml += '</td>';
-                        lProductListHtml += '<td>';
-                        lProductListHtml += lData[i].Spec;
-                        lProductListHtml += '</td>';
-                        lProductListHtml += '<td>';
-                        lProductListHtml += lData[i].ClassID;
-                        lProductListHtml += '</td>';
+                        lProductListHtml += '<th>产品编码</th>';
+                        lProductListHtml += '<th>产品全称</th>';
+                        lProductListHtml += '<th>产品简称</th>';
+                        lProductListHtml += '<th>产品类型</th>';
+                        lProductListHtml += '<th>电压等级</th>';
+                        lProductListHtml += '<th>产品规格</th>';
+                        lProductListHtml += '<th>产品分类编码</th>';
                         lProductListHtml += '</tr>';
-                    }
-                    lProductListHtml += '</table>';
-                    $('#divProductList').html(lProductListHtml);
 
+                        for (var i = 0; i < lData.length; i++) {
+                            row_count = lData[i].RCount;
+                            lProductListHtml += '<tr>';
+                            lProductListHtml += '<td>';
+                            lProductListHtml += lData[i].Code;
+                            lProductListHtml += '</td>';
+                            lProductListHtml += '<td>';
+                            lProductListHtml += lData[i].Name;
+                            lProductListHtml += '</td>';
+                            lProductListHtml += '<td>';
+                            lProductListHtml += lData[i].ShortName;
+                            lProductListHtml += '</td>';
+                            lProductListHtml += '<td>';
+                            lProductListHtml += lData[i].Type;
+                            lProductListHtml += '</td>';
+                            lProductListHtml += '<td>';
+                            lProductListHtml += lData[i].Voltage;
+                            lProductListHtml += '</td>';
+                            lProductListHtml += '<td>';
+                            lProductListHtml += lData[i].Spec;
+                            lProductListHtml += '</td>';
+                            lProductListHtml += '<td>';
+                            lProductListHtml += lData[i].ClassID;
+                            lProductListHtml += '</td>';
+                            lProductListHtml += '</tr>';
+                        }
+                        lProductListHtml += '</table>';
+                        $('#divProductList').html(lProductListHtml);
+                        GeneratePageIndex(row_count, page_size, page_index);
+                    }
+                    catch (err) {
+                        layer.alert(err.message);
+                    }
                     layer.close(index);
                 }
-            })
-        });
+            });
+        }
+
+        function GeneratePageIndex(row_count, page_size, page_index) {
+            var page_count = Math.ceil(row_count / page_size);
+            var lPageIndexHtml = '';
+            lPageIndexHtml += '<nav>';
+            lPageIndexHtml += '<ul class="pagination">';
+
+            if (page_index == 1) {
+                lPageIndexHtml += '<li class="disabled"><a href="#">&laquo;</a></li>';
+            }
+            else {
+                lPageIndexHtml += '<li><a href="#" onclick="GetData(' + (page_index - 1) + ')" >&laquo;</a></li>';
+            }
+
+            if (page_index - 1 > 5) {
+                lPageIndexHtml += '<li><a href="#" onclick="GetData(1)">1</a></li>';
+                lPageIndexHtml += '<li><a href="#" onclick="GetData(' + (page_index - 4) + ')">...</a></li>';
+                lPageIndexHtml += '<li><a href="#" onclick="GetData(' + (page_index - 2) + ')">' + (page_index - 2) + '</a></li>';
+                lPageIndexHtml += '<li><a href="#" onclick="GetData(' + (page_index - 1) + ')">' + (page_index - 1) + '</a></li>';
+                lPageIndexHtml += '<li class="active"><a href="#" onclick="GetData(' + (page_index) + ')">' + (page_index) + '</a></li>';
+            }
+            else {
+                for (var i = 1; i <= page_index; i++) {
+                    if (i == page_index) {
+                        lPageIndexHtml += '<li class="active"><a href="#" onclick="GetData(' + (i) + ')">' + (i) + '</a></li>';
+                    }
+                    else {
+                        lPageIndexHtml += '<li><a href="#" onclick="GetData(' + (i) + ')">' + (i) + '</a></li>';
+                    }
+                }
+            }
+
+            if (page_count - page_index > 5) {
+                lPageIndexHtml += '<li><a href="#" onclick="GetData(' + (page_index + 1) + ')">' + (page_index + 1) + '</a></li>';
+                lPageIndexHtml += '<li><a href="#" onclick="GetData(' + (page_index + 2) + ')">' + (page_index + 2) + '</a></li>';
+                lPageIndexHtml += '<li><a href="#" onclick="GetData(' + (page_index + 4) + ')">...</a></li>';
+                lPageIndexHtml += '<li><a href="#" onclick="GetData(' + page_count + ')">' + page_count + '</a></li>';
+            }
+            else {
+                for (var i = page_index + 1; i <= page_count; i++) {
+
+                    lPageIndexHtml += '<li><a href="#" onclick="GetData(' + (i) + ')">' + (i) + '</a></li>';
+                }
+            }
+
+            if (page_index == page_count) {
+                lPageIndexHtml += '<li class="disabled"><a href="#">&raquo;</a></li>';
+            }
+            else {
+                lPageIndexHtml += '<li><a href="#" onclick="GetData(' + (page_index + 1) + ')">&raquo;</a></li>';
+            }
+
+            lPageIndexHtml += '</ul>';
+            lPageIndexHtml += '</nav>';
+            $('#divPageIndex').html(lPageIndexHtml);
+        }
     </script>
 </head>
 <body>
-    <h1>产品列表</h1>
-    <div id="divProductList">
+    <div style="margin:10px;">
+        <h1>产品列表</h1>
+        <div id="divProductList">
 
+        </div>
+        <div id="divPageIndex">
+
+        </div>
     </div>
 </body>
 </html>
