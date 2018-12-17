@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using CSLib;
 using System.Data;
+using CSLib.BackEnd.JSon;
+
 namespace WebApplication.Controllers
 {
     public class ProductController : Controller
@@ -13,13 +15,31 @@ namespace WebApplication.Controllers
         // GET: /Car/
         public ActionResult List()
         {
-            String lSQL = "SELECT Code, Name, Type, Voltage, Spec FROM T_Product";
-            DataTable lDT = null;
-
-            DBHelper.GetDataTable(lSQL, ref lDT);
-
             return View();
         }
 
+        public String GetListData()
+        {
+            String lJsonStr = "";
+            String lSQL = "";
+            DataTable lDT = null;
+
+            lSQL = "SELECT TOP (100)";
+            lSQL += " Code";
+            lSQL += ", Name";
+            lSQL += ", ShortName";
+            lSQL += ", Type";
+            lSQL += ", Voltage";
+            lSQL += ", Spec";
+            lSQL += ", ClassID";
+            lSQL += " FROM T_Product";
+
+            if (DBHelper.GetDataTable(lSQL, ref lDT) == EXESQLRET.SUCCESS)
+            {
+                lJsonStr = ConvertToJson.FromDataTable(lDT);
+            }
+
+            return lJsonStr;
+        }
     }
 }

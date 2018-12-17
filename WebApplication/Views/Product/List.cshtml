@@ -9,10 +9,68 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>List</title>
+    <link type="text/css" rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="~/Content/layer/layer.js"></script>
+    <script type="text/javascript" src="~/Scripts/MyJsLib/MyJsLib.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var index = layer.load(2, { shade: "true" });
+            MyAjax({
+                "url": "/Product/GetListData"
+                ,
+                "fnSuccess": function (pData) {
+                    var lData = JSON.parse(pData);
+                    var lProductListHtml = "";
+                    lProductListHtml = '<table class="table table-bordered table-hover table-striped">';
+                    lProductListHtml += '<tr>';
+                    lProductListHtml += '<th>产品编码</th>';
+                    lProductListHtml += '<th>产品全称</th>';
+                    lProductListHtml += '<th>产品简称</th>';
+                    lProductListHtml += '<th>产品类型</th>';
+                    lProductListHtml += '<th>电压等级</th>';
+                    lProductListHtml += '<th>产品规格</th>';
+                    lProductListHtml += '<th>产品分类编码</th>';
+                    lProductListHtml += '</tr>';
+
+                    for (var i = 0; i < lData.length; i++) {
+                        lProductListHtml += '<tr>';
+                        lProductListHtml += '<td>';
+                        lProductListHtml += lData[i].Code;
+                        lProductListHtml += '</td>';
+                        lProductListHtml += '<td>';
+                        lProductListHtml += lData[i].Name;
+                        lProductListHtml += '</td>';
+                        lProductListHtml += '<td>';
+                        lProductListHtml += lData[i].ShortName;
+                        lProductListHtml += '</td>';
+                        lProductListHtml += '<td>';
+                        lProductListHtml += lData[i].Type;
+                        lProductListHtml += '</td>';
+                        lProductListHtml += '<td>';
+                        lProductListHtml += lData[i].Voltage;
+                        lProductListHtml += '</td>';
+                        lProductListHtml += '<td>';
+                        lProductListHtml += lData[i].Spec;
+                        lProductListHtml += '</td>';
+                        lProductListHtml += '<td>';
+                        lProductListHtml += lData[i].ClassID;
+                        lProductListHtml += '</td>';
+                        lProductListHtml += '</tr>';
+                    }
+                    lProductListHtml += '</table>';
+                    $('#divProductList').html(lProductListHtml);
+
+                    layer.close(index);
+                }
+            })
+        });
+    </script>
 </head>
 <body>
     <h1>产品列表</h1>
-    <div> 
+    <div id="divProductList">
+
     </div>
 </body>
 </html>
