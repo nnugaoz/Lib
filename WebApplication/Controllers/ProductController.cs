@@ -31,7 +31,7 @@ namespace WebApplication.Controllers
             lSQL += "           T_Product";
             lSQL += "   SELECT * FROM(";
             lSQL += "        SELECT";
-            lSQL += "               @RowCount RCount";
+            lSQL += "               @RowCount RowCnt";
             lSQL += "             , ROW_NUMBER()OVER(ORDER BY Code) i";
             lSQL += "             , Code";
             lSQL += "             , Name";

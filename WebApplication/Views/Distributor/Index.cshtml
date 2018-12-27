@@ -12,130 +12,61 @@
     <link type="text/css" rel="stylesheet" href="~/Content/bootstrap.min.css" />
     <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="~/Content/layer/layer.js"></script>
-
+    <script type="text/javascript" src="~/Scripts/MyJsLib/MyPageList.js"></script>
     <script type="text/javascript">
+
         $(function () {
-            Init(1);
+            Init();
         });
 
-        function Init(page_index) {
-            var index = layer.load();
-            var lPageSize = 10;
-
-            $.ajax(
+        function Init() {
+            myPageList.Config(
                 {
-                    "type": "get"
+                    mTableDivID: "divDistributorList"
                     ,
-                    "url": "/Distributor/GetListData"
+                    mPageIndexDivID: "divPageIndex"
                     ,
-                    "data": { "begin_index": (page_index - 1) * lPageSize + 1, "end_index": page_index * lPageSize }
+                    mRequestUrl: "/Distributor/GetListData"
                     ,
-                    "timeout": "60000"
+                    mRequestParams: {}
                     ,
-                    "success": function (pData) {
-                        var lData = JSON.parse(pData);
-                        var lListHtml = "";
-                        lListHtml += "<table class='table table-bordered table-hover table-striped'>";
-                        lListHtml += "<thead>";
-                        lListHtml += "<tr>";
-                        lListHtml += "<th>编码</th>";
-                        lListHtml += "<th>姓名</th>";
-                        lListHtml += "<th>省份</th>";
-                        lListHtml += "<th>地址</th>";
-                        lListHtml += "<th>联系电话</th>";
-                        lListHtml += "</tr>";
-                        lListHtml += "</thead>";
-                        lListHtml += "<tbody>";
-                        for (var i = 0; i < lData.length; i++) {
-                            lListHtml += "<tr>";
-                            lListHtml += "<td>";
-                            lListHtml += lData[i].Code;
-                            lListHtml += "</td>";
-                            lListHtml += "<td>";
-                            lListHtml += lData[i].Name;
-                            lListHtml += "</td>";
-                            lListHtml += "<td>";
-                            lListHtml += lData[i].Province;
-                            lListHtml += "</td>";
-                            lListHtml += "<td>";
-                            lListHtml += lData[i].Address;
-                            lListHtml += "</td>";
-                            lListHtml += "<td>";
-                            lListHtml += lData[i].Telephone;
-                            lListHtml += "</td>";
-                            lListHtml += "</tr>";
+                    mColumns: [
+                        {
+                            mColumnHeaderText: "编码"
+                            ,
+                            mColumnDataSourceID: "Code"
                         }
-                        lListHtml += "</tbody>";
-                        lListHtml += "</table>";
-                        $("#divDistributorList").html(lListHtml);
-
-                        var lRowCount = 0;
-                        var lPageCount = 0;
-
-                        var lPageIndexHtml = "";
-
-                        if (lData.length <= 0) {
-                            return;
+                        ,
+                        {
+                            mColumnHeaderText: "姓名"
+                            ,
+                            mColumnDataSourceID: "Name"
                         }
-
-                        lRowCount = lData[0].c;
-                        lPageCount = Math.ceil(lRowCount / lPageSize);
-
-                        lPageIndexHtml += "<nav>";
-                        lPageIndexHtml += "<ul class='pagination'>";
-                        if (page_index == 1) {
-                            lPageIndexHtml += "<li class='disabled'><a href='#'>上一页</a></li>";
+                        ,
+                        {
+                            mColumnHeaderText: "省份"
+                            ,
+                            mColumnDataSourceID: "Province"
                         }
-                        else {
-                            lPageIndexHtml += "<li><a href='#' onclick='Init(" + (page_index - 1) + ")'>上一页</a></li>";
+                        ,
+                        {
+                            mColumnHeaderText: "地址"
+                            ,
+                            mColumnDataSourceID: "Address"
                         }
-                        if (page_index - 1 > 5) {
-                            lPageIndexHtml += "<li><a href='#' onclick='Init(1)'>1</a></li>";
-                            lPageIndexHtml += "<li><a href='#' onclick='Init(" + (page_index - 4) + ")'>...</a></li>";
-                            lPageIndexHtml += "<li><a href='#' onclick='Init(" + (page_index - 2) + ")'>" + (page_index - 2) + "</a></li>";
-                            lPageIndexHtml += "<li><a href='#' onclick='Init(" + (page_index - 1) + ")'>" + (page_index - 1) + "</a></li>";
+                        ,
+                        {
+                            mColumnHeaderText: "联系电话"
+                            ,
+                            mColumnDataSourceID: "Telephone"
                         }
-                        else {
-                            for (var i = 1; i < page_index; i++) {
-                                lPageIndexHtml += "<li><a href='#' onclick='Init(" + i + ")'>" + i + "</a></li>";
-                            }
-                        }
-                        lPageIndexHtml += "<li class='active'><a href='#' onclick='Init(" + page_index + ")'>" + page_index + "</a></li>";
-
-                        if (lPageCount - page_index > 5) {
-                            lPageIndexHtml += "<li><a href='#' onclick='Init(" + (page_index + 1) + ")'>" + (page_index + 1) + "</a></li>";
-                            lPageIndexHtml += "<li><a href='#' onclick='Init(" + (page_index + 2) + ")'>" + (page_index + 2) + "</a></li>";
-                            lPageIndexHtml += "<li><a href='#' onclick='Init(" + (page_index + 4) + ")'>...</a></li>";
-                            lPageIndexHtml += "<li><a href='#' onclick='Init(" + lPageCount + ")'>" + lPageCount + "</a></li>";
-                        }
-                        else {
-                            for (var i = page_index + 1; i <= lPageCount; i++) {
-                                lPageIndexHtml += "<li><a href='#' onclick='Init(" + i + ")'>" + i + "</a></li>";
-                            }
-                        }
-
-                        if (page_index == lPageCount) {
-                            lPageIndexHtml += "<li class='disabled'><a href='#'>下一页</a></li>";
-                        }
-                        else {
-                            lPageIndexHtml += "<li><a href='#' onclick='Init(" + (page_index + 1) + ")'>下一页</a></li>";
-                        }
-                        lPageIndexHtml += "<li class='disabled'><a href='#'>共" + lRowCount + "条数据，" + lPageCount + "页</a></li>";
-                        lPageIndexHtml += "</ul>";
-                        lPageIndexHtml += "</nav>";
-                        $("#divPageIndex").html(lPageIndexHtml);
-                    }
-                    ,
-                    "error": function (xhr, statusText) {
-
-                    }
-                    ,
-                    "complete": function (xhr, statusText) {
-                        layer.close(index);
-                    }
+                    ]
                 }
                 );
+            myPageList.LoadData(1);
         }
+
+
     </script>
 </head>
 <body>

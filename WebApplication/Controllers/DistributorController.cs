@@ -34,7 +34,7 @@ namespace WebApplication.Controllers
             lSQL += " 	,Address";
             lSQL += " 	,Telephone ";
             lSQL += " 	,ROW_NUMBER()OVER(ORDER BY Code) i";
-            lSQL += " 	,@row_count c";
+            lSQL += " 	,@row_count RowCnt";
             lSQL += " 	FROM T_Distributor";
             lSQL += " )T";
             lSQL += " WHERE i>=" + begin_index + " AND i<=" + end_index;
