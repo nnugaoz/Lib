@@ -1,6 +1,59 @@
-﻿@{
-    ViewBag.Title = "Home-Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿
+@{
+    Layout = null;
 }
 
-<h2>Home-Index</h2>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link type="text/css" rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+        function MenuClick(obj, param) {
+            $(obj).parent().siblings().removeClass("active");
+            $(obj).parent().addClass("active");
+            switch (param) {
+                case "1":
+                    $("#divContent").load("/Distributor/Index");
+                    break;
+
+                case "2":
+                    $("#divContent").load("/Product/List");
+                    break;
+
+                case "3":
+                    $("#divContent").load("/Order/List");
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <div style="height:80px;text-align:center;">
+            ABCD
+        </div>
+        <div>
+            <div style="width:20%;float:left;">
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="active"><a href="#" onclick="MenuClick(this,'1');">经销商列表</a></li>
+                    <li><a href="#" onclick="MenuClick(this,'2');">产品列表</a></li>
+                    <li><a href="#" onclick="MenuClick(this,'3');">订单列表</a></li>
+                </ul>
+            </div>
+            <div style="width:80%;float:left;" id="divContent">
+
+            </div>
+        </div>
+        <div style="position:fixed;height:40px;bottom:0px;text-align:center;background-color:red;width:100%;z-index:2;">
+            EFGH
+        </div>
+</body>
+</html>
+
