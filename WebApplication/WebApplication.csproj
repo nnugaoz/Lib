@@ -127,9 +127,6 @@
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Global.asax" />
-    <Content Include="Models\Car\Car.js" />
-    <Content Include="Models\Car\Index.js" />
-    <Content Include="Models\Car\Paging.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -157,6 +154,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\DistributorController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\ProductClassController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -166,8 +164,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include="Views\Product\List.cshtml" />
-    <Content Include="Views\Order\List.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\Distributor\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <None Include="Web.Debug.config">
@@ -179,6 +177,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
+    <Folder Include="Views\ProductClass\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CSLib\CSLib.csproj">
