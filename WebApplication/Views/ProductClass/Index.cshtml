@@ -1,0 +1,56 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <script type="text/javascript" src="~/Scripts/MyJsLib/MyPageList.js"></script>
+    <script type="text/javascript">
+
+        $(function () {
+            Init();
+        });
+
+        function Init() {
+            myPageList.Config(
+                {
+                    mTableDivID: "divProductClassList"
+                    ,
+                    mPageIndexDivID: "divPageIndex"
+                    ,
+                    mRequestUrl: "/ProductClass/GetListData"
+                    ,
+                    mRequestParams: {}
+                    ,
+                    mColumns: [
+                        {
+                            mColumnHeaderText: "分类名称"
+                            ,
+                            mColumnDataSourceID: "Title"
+                        }
+                    ]
+                }
+                );
+            myPageList.LoadData(1);
+        }
+
+
+    </script>
+</head>
+<body>
+    <div style="margin:10px;">
+        <h1>产品分类列表</h1>
+        <div id="divProductClassList">
+
+        </div>
+        <div id="divPageIndex">
+
+        </div>
+    </div>
+</body>
+</html>

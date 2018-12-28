@@ -168,6 +168,7 @@
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\Distributor\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\ProductClass\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -178,7 +179,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\ProductClass\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CSLib\CSLib.csproj">
