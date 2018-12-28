@@ -10,7 +10,9 @@
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
     <link type="text/css" rel="stylesheet" href="~/Content/bootstrap.min.css" />
+
     <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="~/Content/layer/layer.js"></script>
     <script type="text/javascript">
         function MenuClick(obj, param) {
             $(obj).parent().siblings().removeClass("active");
@@ -21,11 +23,11 @@
                     break;
 
                 case "2":
-                    $("#divContent").load("/Product/List");
+                    $("#divContent").load("/Product/Index");
                     break;
 
                 case "3":
-                    $("#divContent").load("/Order/List");
+                    $("#divContent").load("/Order/Index");
                     break;
 
                 default:
@@ -51,7 +53,7 @@
 
             </div>
         </div>
-        <div style="position:fixed;height:40px;bottom:0px;text-align:center;background-color:red;width:100%;z-index:2;">
+        <div style="position:fixed;height:40px;bottom:0px;text-align:center;width:100%;z-index:2;">
             EFGH
         </div>
 </body>

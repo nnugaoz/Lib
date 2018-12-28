@@ -15,7 +15,7 @@ namespace WebApplication.Controllers
 = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         // GET: Order
-        public ActionResult List()
+        public ActionResult Index()
         {
             return View();
         }

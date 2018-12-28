@@ -13,7 +13,7 @@ namespace WebApplication.Controllers
     {
         //
         // GET: /Car/
-        public ActionResult List()
+        public ActionResult Index()
         {
             return View();
         }
