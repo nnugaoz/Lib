@@ -17,6 +17,11 @@ namespace WebApplication.Controllers
             return View();
         }
 
+        public ActionResult Add()
+        {
+            return View();
+        }
+
         public String GetListData()
         {
             String lResult = "";

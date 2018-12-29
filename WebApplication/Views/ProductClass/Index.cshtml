@@ -39,12 +39,17 @@
             myPageList.LoadData(1);
         }
 
+        function btnAdd_Click(pSender) {
+            debugger;
+            $("#divContent").load("/ProductClass/Add");
+        }
 
     </script>
 </head>
 <body>
     <div style="margin:10px;">
         <h1>产品分类列表</h1>
+        <input type="button" id="btnAdd" class="btn btn-primary" style="float:right;" value="新增" onclick="btnAdd_Click(this);" />
         <div id="divProductClassList">
 
         </div>
