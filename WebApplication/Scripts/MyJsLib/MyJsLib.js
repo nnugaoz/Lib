@@ -1,6 +1,10 @@
 ﻿function MyAjax(pAjaxParam) {
+    if (pAjaxParam.type == null) {
+        pAjaxParam.type = "get";
+    }
+
     $.ajax({
-        "type": "get",
+        "type": pAjaxParam.type,
         "timeout": "60000",
         "url": pAjaxParam.url,
         "data": pAjaxParam.data,
