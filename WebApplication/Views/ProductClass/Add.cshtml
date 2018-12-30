@@ -2,24 +2,72 @@
 @{
     Layout = null;
 }
-
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Add</title>
+    <script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/MyJsLib/MyJsLib.js"></script>
+    <script type="text/javascript">
+
+        $(function () {
+            $("#formNewProductClass").validate({
+                rules: {
+                    txtClassName: "required"
+                }
+,
+                messages: {
+                    txtClassName: "请输入分类名称！"
+                }
+            });
+        });
+
+        function btnSave_Click() {
+            if ($("#formNewProductClass").valid()) {
+                MyAjax({
+                    "type": "post"
+                    ,
+                    "url": "/ProductClass/Add"
+                    ,
+                    "data": { "pClassName": $("#txtClassName").val() }
+                    ,
+                    "fnSuccess": function (pData) {
+                        switch (pData) {
+                            case "0":
+                                layer.alert("保存失败！", { icon: 2 });
+                                break;
+                            case "1":
+                                layer.alert("分类名称已存在，保存失败！", { icon: 2 });
+                                break;
+                            case "2":
+                                layer.alert("保存成功！", { icon: 1 });
+                                $("#divContent").load("/ProductClass/Index");
+                                break;
+                            default:
+                                layer.alert("保存失败！", { icon: 2 });
+                                break;
+                        }
+                    }
+                });
+            }
+        }
+
+        function btnCancel_Click() {
+            $("#divContent").load("/ProductClass/Index");
+        }
+    </script>
 </head>
 <body>
     <div>
         <h1>新增产品分类</h1>
-        <form>
+        <form id="formNewProductClass">
             <div class="form-group">
                 <label for="txtClassName">分类名称</label>
-                <input type="text" class="form-control" id="txtClassName" />
+                <input type="text" class="form-control" id="txtClassName" name="txtClassName" />
             </div>
-            <input type="button" class="btn btn-primary" id="btnSave" value="保存" />
-            <input type="button" class="btn btn-primary" id="btnCancel" value="取消" />
+            <input type="button" class="btn btn-primary" id="btnSave" value="保存" onclick="btnSave_Click()" />
+            <input type="button" class="btn btn-primary" id="btnCancel" value="取消" onclick="btnCancel_Click()" />
         </form>
     </div>
 </body>

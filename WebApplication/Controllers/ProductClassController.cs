@@ -22,6 +22,53 @@ namespace WebApplication.Controllers
             return View();
         }
 
+        [HttpPost]
+        public String Add(String pClassName)
+        {
+            String lSQL = "";
+            DataTable lDT = null;
+            String lResult = "";
+
+            lSQL += "SELECT ";
+            lSQL += " ID";
+            lSQL += " FROM";
+            lSQL += " T_Product_Class";
+            lSQL += " WHERE Title='" + pClassName + "'";
+            lSQL += " AND Del='0'";
+
+            if (DBHelper.GetDataTable(lSQL, ref lDT) == EXESQLRET.SUCCESS)
+            {
+                //产品分类重复
+                lResult = "1";
+            }
+            else
+            {
+                lSQL = "INSERT INTO T_Product_Class(";
+                lSQL += " ID";
+                lSQL += ", Title";
+                lSQL += ", Del";
+                lSQL += ", EditMan";
+                lSQL += ", EditDate";
+                lSQL += ")VALUES(";
+                lSQL += "'" + Guid.NewGuid().ToString() + "'";
+                lSQL += ", '" + pClassName + "'";
+                lSQL += ", '0'";
+                lSQL += ", 'gaozhi'";
+                lSQL += ", '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "'";
+                lSQL += ")";
+
+                if (DBHelper.ExecuteSQL(lSQL) == EXESQLRET.SUCCESS)
+                {
+                    lResult = "2";
+                }
+                else
+                {
+                    lResult = "0";
+                }
+            }
+            return lResult;
+        }
+
         public String GetListData()
         {
             String lResult = "";
@@ -45,7 +92,7 @@ namespace WebApplication.Controllers
             lSQL += "    WHERE";
             lSQL += "             DEL='0'";
 
-            if(DBHelper.GetDataTable(lSQL, ref lDT)== EXESQLRET.SUCCESS)
+            if (DBHelper.GetDataTable(lSQL, ref lDT) == EXESQLRET.SUCCESS)
             {
                 lResult = ConvertToJson.FromDataTable(lDT);
             }
