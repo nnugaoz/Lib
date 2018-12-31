@@ -15,6 +15,22 @@
         });
 
         function Init() {
+            var lColumns = new Array();
+            var lTitleColumn = new PageTableColumn();
+            lTitleColumn.mColumnHeaderText = "分类名称";
+            lTitleColumn.mColumnDataSourceID = "Title";
+            lColumns.push(lTitleColumn);
+            var lEditColumn = new PageTableButtonColumn();
+            lEditColumn.mColumnHeaderText = "";
+            lEditColumn.mColumnDataSourceID = "";
+            lEditColumn.mButtonCaption = "编辑";
+            lColumns.push(lEditColumn);
+            var lDelColumn = new PageTableButtonColumn();
+            lDelColumn.mColumnHeaderText = "";
+            lDelColumn.mColumnDataSourceID = "";
+            lDelColumn.mButtonCaption = "删除";
+            lColumns.push(lDelColumn);
+
             var lPageTable = new PageTable(
                 {
                     mTableDivID: "divProductClassList"
@@ -25,13 +41,7 @@
                     ,
                     mRequestParams: {}
                     ,
-                    mColumns: [
-                        {
-                            mColumnHeaderText: "分类名称"
-                            ,
-                            mColumnDataSourceID: "Title"
-                        }
-                    ]
+                    mColumns: lColumns
                 }
                 );
             lPageTable.LoadData(1);

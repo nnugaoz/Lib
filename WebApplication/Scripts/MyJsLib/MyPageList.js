@@ -31,6 +31,14 @@ function PageTableColumn() {
     this.mColumnDataSourceID = "";
 }
 
+function PageTableButtonColumn() {
+    //按钮标题
+    this.mButtonCaption = "";
+}
+
+PageTableButtonColumn.prototype = PageTableColumn;
+
+
 //分页 - 表格
 function PageTable(pConfigParam) {
     //页面上需嵌入列表的div 的id
@@ -57,7 +65,7 @@ function PageTable(pConfigParam) {
 
 //分页 - 页码
 function PageIndex() {
-    
+
     this.mPageIndexDivID = "";
 
     //当前页码
@@ -139,7 +147,16 @@ PageTable.prototype.GenerateHtml = function () {
         lPageTableBodyTr = $("<tr></tr>");
         for (var j = 0; j < this.mColumns.length; j++) {
             lPageTableBodyTrTd = $("<td></td>");
-            lPageTableBodyTrTd.text(this.mPageData[i][this.mColumns[j].mColumnDataSourceID]);
+            if (PageTableColumn.prototype.isPrototypeOf(this.mColumns[j])) {
+                lPageTableBodyTrTd.text(this.mPageData[i][this.mColumns[j].mColumnDataSourceID]);
+            }
+            else if (PageTableButtonColumn.prototype.isPrototypeOf(this.mColumns[j])) {
+                var lBtn = $("<input type='button'/>");
+                lBtn.addClass("btn btn-info");
+                lBtn.attr("value", this.mColumns[j].mButtonCaption);
+                lPageTableBodyTrTd.append(lBtn);
+            }
+
             lPageTableBodyTr.append(lPageTableBodyTrTd);
         }
         lPageTableBody.append(lPageTableBodyTr);
