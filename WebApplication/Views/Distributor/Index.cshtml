@@ -2,9 +2,7 @@
 @{
     Layout = null;
 }
-
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -17,7 +15,7 @@
         });
 
         function Init() {
-            myPageList.Config(
+            var lPageTable = new PageTable(
                 {
                     mTableDivID: "divDistributorList"
                     ,
@@ -60,7 +58,7 @@
                     ]
                 }
                 );
-            myPageList.LoadData(1);
+            lPageTable.LoadData(1);
         }
 
 
@@ -70,10 +68,8 @@
     <h1>经销商列表</h1>
     <div>
         <div id="divDistributorList">
-
         </div>
         <div id="divPageIndex">
-
         </div>
     </div>
 </body>

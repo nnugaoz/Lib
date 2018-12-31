@@ -1,9 +1,7 @@
 ﻿@{
     Layout = null;
 }
-
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -16,7 +14,7 @@
         });
 
         function Init() {
-            myPageList.Config(
+            var lPageTable = new PageTable(
                 {
                     mTableDivID: "divList"
                     ,
@@ -83,7 +81,7 @@
                     ]
                 }
                 );
-            myPageList.LoadData(1);
+            lPageTable.LoadData(1);
         }
     </script>
 </head>
@@ -91,10 +89,8 @@
     <div>
         <h1>Order List</h1>
         <div id="divList" style="margin:10px;">
-
         </div>
         <div id="divPageIndex" style="margin:10px">
-
         </div>
     </div>
 </body>
