@@ -65,8 +65,7 @@ function MyPageList() {
 }
 
 //参数配置
-MyPageList.prototype.Config = function (pConfigParam)
-{
+MyPageList.prototype.Config = function (pConfigParam) {
     //页面上需嵌入列表的div 的id
     this.mTableDivID = pConfigParam.mTableDivID;
 
@@ -119,86 +118,194 @@ MyPageList.prototype.LoadData = function (pPageIndex) {
 
 //生成分页列表和页码HTML
 MyPageList.prototype.GenerateHtml = function () {
+
+    //生成分页列表THML
+    this.GenerateHtml_PageListHtml();
+
+    //生成页码列表HTML
+    this.GenerateHtml_PageIndexHtml();
+}
+
+//生成分页列表
+MyPageList.prototype.GenerateHtml_PageListHtml = function () {
     var lTableHtml = '';
     var lPageIndexHtml = '';
+    var lPageTable = $("<table></table>");
+    var lPageTableHead = $("<thead></thead>");
+    var lPageTableHeadTr = $("<tr></tr>");
+    var lPageTableHeadTrTh = $("<th></th>");
+    var lPageTableBody = $("<tbody></tbody>");
+    var lPageTableBodyTr = $("<tr></tr>");
+    var lPageTableBodyTrTd = $("<td></td>");
 
-    lTableHtml += '<table class="table table-bordered table-striped table-hover">';
-    lTableHtml += '<thead>';
-    lTableHtml += '<tr>';
+    lPageTable.addClass("table table-bordered table-striped table-hover");
+
+    lPageTable.append(lPageTableHead);
+    lPageTable.append(lPageTableBody);
+
+    lPageTableHead.append(lPageTableHeadTr);
     for (var i = 0; i < this.mColumns.length; i++) {
-        lTableHtml += '<th>';
-        lTableHtml += this.mColumns[i].mColumnHeaderText;
-        lTableHtml += '</th>';
+        lPageTableHeadTrTh = $("<th></th>");
+        lPageTableHeadTrTh.text(this.mColumns[i].mColumnHeaderText);
+        lPageTableHeadTr.append(lPageTableHeadTrTh);
     }
-    lTableHtml += '</tr>';
-    lTableHtml += '</thead>';
-    lTableHtml += '<tbody>';
 
     for (var i = 0; i < this.mPageData.length; i++) {
-        lTableHtml += '<tr>';
+        lPageTableBodyTr = $("<tr></tr>");
         for (var j = 0; j < this.mColumns.length; j++) {
-            lTableHtml += '<td>';
-            lTableHtml += this.mPageData[i][this.mColumns[j].mColumnDataSourceID];
-            lTableHtml += '</td>';
+            lPageTableBodyTrTd = $("<td></td>");
+            lPageTableBodyTrTd.text(this.mPageData[i][this.mColumns[j].mColumnDataSourceID]);
+            lPageTableBodyTr.append(lPageTableBodyTrTd);
         }
-        lTableHtml += '</tr>';
+        lPageTableBody.append(lPageTableBodyTr);
     }
 
-    lTableHtml += '</tbody>';
-    lTableHtml += '</table>';
-    $('#' + this.mTableDivID).html(lTableHtml);
+    $('#' + this.mTableDivID).append(lPageTable);
+}
 
+MyPageList.prototype.GenerateHtml_PageIndexHtml = function () {
     if (this.mPageData.length > 0) {
         //返回的代表每条数据的JSON对象中，必须包括RowCnt成员！！！！！
         this.mRowCount = this.mPageData[0].RowCnt;
         this.mPageCount = Math.ceil(this.mRowCount / this.mPageSize);
 
-        lPageIndexHtml += '<nav>';
-        lPageIndexHtml += '<ul class="pagination">';
+        var lPageIndexNav = $("<nav></nav>");
+        var lPageIndexNav_Ul = $("<ul></ul>");
+        var lPageIndexNav_Ul_Li = $("<li></li>");
+        var lPageIndexNav_Ul_Li_A = $("<a></a>");
 
+        lPageIndexNav_Ul.addClass("pagination");
+
+        lPageIndexNav_Ul_Li = $("<li></li>");
+        lPageIndexNav_Ul_Li_A = $("<a></a>");
         if (this.mPageIndex == 1) {
-            lPageIndexHtml += '<li class="disabled"><a href="#">上一页</li>';
+            lPageIndexNav_Ul_Li.addClass("disabled");
         }
         else {
-            lPageIndexHtml += '<li><a href="#" onclick="myPageList.LoadData(' + (this.mPageIndex - 1) + ')">上一页</li>';
+            lPageIndexNav_Ul_Li_A.on("click", null, { "pageList": this, "pageIndex": this.mPageIndex - 1}, this.PageIndexJump);
         }
+        lPageIndexNav_Ul_Li_A.attr("href", "#");
+        lPageIndexNav_Ul_Li.append(lPageIndexNav_Ul_Li_A);
+        lPageIndexNav_Ul_Li_A.text("上一页");
+        lPageIndexNav_Ul.append(lPageIndexNav_Ul_Li);
+
 
         if (this.mPageIndex - 1 > 5) {
-            lPageIndexHtml += '<li><a href="#" onclick="myPageList.LoadData(' + (this.mPageIndex - 4) + ')">...</li>';
-            lPageIndexHtml += '<li><a href="#" onclick="myPageList.LoadData(' + (this.mPageIndex - 2) + ')">' + (this.mPageIndex - 2) + '</li>';
-            lPageIndexHtml += '<li><a href="#" onclick="myPageList.LoadData(' + (this.mPageIndex - 1) + ')">' + (this.mPageIndex - 1) + '</li>';
+            lPageIndexNav_Ul_Li = $("<li></li>");
+            lPageIndexNav_Ul_Li_A = $("<a></a>");
+            lPageIndexNav_Ul_Li_A.attr("href", "#");
+            lPageIndexNav_Ul_Li_A.on("click", null, this.mPageIndex - 4, myPageList.LoadData);
+            lPageIndexNav_Ul_Li_A.text("...");
+            lPageIndexNav_Ul_Li.append(lPageIndexNav_Ul_Li_A);
+            lPageIndexNav_Ul.append(lPageIndexNav_Ul_Li);
+
+            lPageIndexNav_Ul_Li = $("<li></li>");
+            lPageIndexNav_Ul_Li_A = $("<a></a>");
+            lPageIndexNav_Ul_Li_A.attr("href", "#");
+            lPageIndexNav_Ul_Li_A.on("click", null, this.mPageIndex - 2, myPageList.LoadData);
+            lPageIndexNav_Ul_Li_A.text(this.mPageIndex - 2);
+            lPageIndexNav_Ul_Li.append(lPageIndexNav_Ul_Li_A);
+            lPageIndexNav_Ul.append(lPageIndexNav_Ul_Li);
+
+            lPageIndexNav_Ul_Li = $("<li></li>");
+            lPageIndexNav_Ul_Li_A = $("<a></a>");
+            lPageIndexNav_Ul_Li_A.attr("href", "#");
+            lPageIndexNav_Ul_Li_A.on("click", null, this.mPageIndex - 1, myPageList.LoadData);
+            lPageIndexNav_Ul_Li_A.text(this.mPageIndex - 1);
+            lPageIndexNav_Ul_Li.append(lPageIndexNav_Ul_Li_A);
+            lPageIndexNav_Ul.append(lPageIndexNav_Ul_Li);
+
         }
         else {
             for (var i = 1; i < this.mPageIndex; i++) {
-                lPageIndexHtml += '<li><a href="#" onclick="myPageList.LoadData(' + i + ')">' + i + '</li>';
+                lPageIndexNav_Ul_Li = $("<li></li>");
+                lPageIndexNav_Ul_Li_A = $("<a></a>");
+                lPageIndexNav_Ul_Li_A.attr("href", "#");
+                lPageIndexNav_Ul_Li_A.on("click", null, i, myPageList.LoadData);
+                lPageIndexNav_Ul_Li_A.text(i);
+                lPageIndexNav_Ul_Li.append(lPageIndexNav_Ul_Li_A);
+                lPageIndexNav_Ul.append(lPageIndexNav_Ul_Li);
             }
         }
 
-        lPageIndexHtml += '<li class="active"><a href="#" onclick="myPageList.LoadData(' + this.mPageIndex + ')">' + this.mPageIndex + '</li>';
+        lPageIndexNav_Ul_Li = $("<li></li>");
+        lPageIndexNav_Ul_Li.addClass("active");
+        lPageIndexNav_Ul_Li_A = $("<a></a>");
+        lPageIndexNav_Ul_Li_A.attr("href", "#");
+        lPageIndexNav_Ul_Li_A.on("click", null, this.mPageIndex, myPageList.LoadData);
+        lPageIndexNav_Ul_Li_A.text(this.mPageIndex);
+        lPageIndexNav_Ul_Li.append(lPageIndexNav_Ul_Li_A);
+        lPageIndexNav_Ul.append(lPageIndexNav_Ul_Li);
 
         if (this.mPageCount - this.mPageIndex > 5) {
-            lPageIndexHtml += '<li><a href="#" onclick="myPageList.LoadData(' + (this.mPageIndex + 1) + ')">' + (this.mPageIndex + 1) + '</li>';
-            lPageIndexHtml += '<li><a href="#" onclick="myPageList.LoadData(' + (this.mPageIndex + 2) + ')">' + (this.mPageIndex + 2) + '</li>';
-            lPageIndexHtml += '<li><a href="#" onclick="myPageList.LoadData(' + (this.mPageIndex + 4) + ')">...</li>';
+            lPageIndexNav_Ul_Li = $("<li></li>");
+            lPageIndexNav_Ul_Li_A = $("<a></a>");
+            lPageIndexNav_Ul_Li_A.attr("href", "#");
+            lPageIndexNav_Ul_Li_A.on("click", null, { "pageList": this, "pageIndex": this.mPageIndex - 1 }, this.PageIndexJump);
+            lPageIndexNav_Ul_Li_A.text(this.mPageIndex + 1);
+            lPageIndexNav_Ul_Li.append(lPageIndexNav_Ul_Li_A);
+            lPageIndexNav_Ul.append(lPageIndexNav_Ul_Li);
+
+            lPageIndexNav_Ul_Li = $("<li></li>");
+            lPageIndexNav_Ul_Li_A = $("<a></a>");
+            lPageIndexNav_Ul_Li_A.attr("href", "#");
+            lPageIndexNav_Ul_Li_A.on("click", null, this.mPageIndex + 2, myPageList.LoadData);
+            lPageIndexNav_Ul_Li_A.text(this.mPageIndex + 2);
+            lPageIndexNav_Ul_Li.append(lPageIndexNav_Ul_Li_A);
+            lPageIndexNav_Ul.append(lPageIndexNav_Ul_Li);
+
+            lPageIndexNav_Ul_Li = $("<li></li>");
+            lPageIndexNav_Ul_Li_A = $("<a></a>");
+            lPageIndexNav_Ul_Li_A.attr("href", "#");
+            lPageIndexNav_Ul_Li_A.on("click", null, this.mPageIndex + 4, myPageList.LoadData);
+            lPageIndexNav_Ul_Li_A.text("...");
+            lPageIndexNav_Ul_Li.append(lPageIndexNav_Ul_Li_A);
+            lPageIndexNav_Ul.append(lPageIndexNav_Ul_Li);
+
         }
         else {
             for (var i = this.mPageIndex + 1; i <= this.mPageCount; i++) {
-                lPageIndexHtml += '<li><a href="#" onclick="myPageList.LoadData(' + i + ')">' + i + '</li>';
+                lPageIndexNav_Ul_Li = $("<li></li>");
+                lPageIndexNav_Ul_Li_A = $("<a></a>");
+                lPageIndexNav_Ul_Li_A.attr("href", "#");
+                lPageIndexNav_Ul_Li_A.on("click", null, i, this.LoadData);
+                lPageIndexNav_Ul_Li_A.text(i);
+                lPageIndexNav_Ul_Li.append(lPageIndexNav_Ul_Li_A);
+                lPageIndexNav_Ul.append(lPageIndexNav_Ul_Li);
             }
         }
 
+        lPageIndexNav_Ul_Li = $("<li></li>");
+        lPageIndexNav_Ul_Li_A = $("<a></a>");
         if (this.mPageIndex == this.mPageCount) {
-            lPageIndexHtml += '<li class="disabled"><a href="#">下一页</li>';
+            lPageIndexNav_Ul_Li.addClass("disabled");
         }
         else {
-            lPageIndexHtml += '<li><a href="#" onclick="myPageList.LoadData(' + (this.mPageIndex + 1) + ')">下一页</li>';
+            lPageIndexNav_Ul_Li_A.on("click", null, this.mPageIndex + 1, myPageList.LoadData);
         }
-        lPageIndexHtml += "<li class='disabled'><a href='#'>共" + this.mRowCount + "条数据，" + this.mPageCount + "页</a></li>";
-        lPageIndexHtml += '</ul>';
-        lPageIndexHtml += '</nav>';
-    }
+        lPageIndexNav_Ul_Li_A.attr("href", "#");
+        lPageIndexNav_Ul_Li.append(lPageIndexNav_Ul_Li_A);
+        lPageIndexNav_Ul_Li_A.text("下一页");
+        lPageIndexNav_Ul.append(lPageIndexNav_Ul_Li);
 
-    $('#' + this.mPageIndexDivID).html(lPageIndexHtml);
+        lPageIndexNav_Ul_Li = $("<li></li>");
+        lPageIndexNav_Ul_Li_A = $("<a></a>");
+        lPageIndexNav_Ul_Li.addClass("disabled");
+        lPageIndexNav_Ul_Li_A.attr("href", "#");
+        lPageIndexNav_Ul_Li.append(lPageIndexNav_Ul_Li_A);
+        lPageIndexNav_Ul_Li_A.text("共" + this.mRowCount + "条数据，" + myPageList.mPageCount + "页");
+        lPageIndexNav_Ul.append(lPageIndexNav_Ul_Li);
+    }
+    lPageIndexNav.append(lPageIndexNav_Ul);
+
+    $('#' + this.mPageIndexDivID).append(lPageIndexNav);
 }
 
+MyPageList.prototype.PageIndexJump = function (pData) {
+    var lPageList = pData.data.pageList;
+    var lPageIndex = pData.data.pageIndex;
+    debugger;
+    lPageList.LoadData(lPageIndex);
+
+}
 var myPageList = new MyPageList();
