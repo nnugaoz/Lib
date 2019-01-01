@@ -23,12 +23,14 @@
             var lEditColumn = new PageTableButtonColumn();
             lEditColumn.mColumnHeaderText = "";
             lEditColumn.mColumnDataSourceID = "";
+            lEditColumn.mClickEventHandler = Edit_EventHandler;
             lEditColumn.mButtonCaption = "编辑";
             lColumns.push(lEditColumn);
             var lDelColumn = new PageTableButtonColumn();
             lDelColumn.mColumnHeaderText = "";
             lDelColumn.mColumnDataSourceID = "";
             lDelColumn.mButtonCaption = "删除";
+            lDelColumn.mClickEventHandler = Del_EventHandler;
             lColumns.push(lDelColumn);
 
             var lPageTable = new PageTable(
@@ -51,6 +53,24 @@
             $("#divContent").load("/ProductClass/Add");
         }
 
+        function Edit_EventHandler(pData) {
+            var lRowData = pData.data.RowData;
+            $("#divContent").load("/ProductClass/Edit?ID=" + lRowData.ID);
+        }
+
+        function Del_EventHandler(pData) {
+            //询问框
+            layer.confirm('您确认删除吗？', {
+                btn: ['确认', '取消'] //按钮
+            }, function () {
+                layer.msg('的确很重要', { icon: 1 });
+            }, function () {
+                layer.msg('也可以这样', {
+                    time: 20000, //20s后自动关闭
+                    btn: ['明白了', '知道了']
+                });
+            });
+        }
     </script>
 </head>
 <body>

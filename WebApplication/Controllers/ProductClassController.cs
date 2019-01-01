@@ -22,6 +22,12 @@ namespace WebApplication.Controllers
             return View();
         }
 
+        public ActionResult Edit(String ID)
+        {
+            ViewBag.ID = ID;
+            return View();
+        }
+
         [HttpPost]
         public String Add(String pClassName)
         {
@@ -86,6 +92,7 @@ namespace WebApplication.Controllers
             lSQL += "    SELECT";
             lSQL += "             @RowCnt                       RowCnt";
             lSQL += "           , ROW_NUMBER()OVER(ORDER BY ID) SerNO";
+            lSQL += "           , ID";
             lSQL += "           , Title";
             lSQL += "    FROM";
             lSQL += "             T_Product_Class";
@@ -95,6 +102,47 @@ namespace WebApplication.Controllers
             if (DBHelper.GetDataTable(lSQL, ref lDT) == EXESQLRET.SUCCESS)
             {
                 lResult = ConvertToJson.FromDataTable(lDT);
+            }
+            return lResult;
+        }
+
+        public String GetByID(String ID)
+        {
+            String lResult = "";
+            String lSQL = "";
+            DataTable lDT = null;
+            lSQL += " SELECT ";
+            lSQL += " ID";
+            lSQL += ", Title";
+            lSQL += " FROM";
+            lSQL += " T_Product_Class";
+            lSQL += " WHERE Del='0'";
+            lSQL += " AND ID='" + ID + "'";
+
+            if (DBHelper.GetDataTable(lSQL, ref lDT) == EXESQLRET.SUCCESS)
+            {
+                lResult = ConvertToJson.FromDataTable(lDT);
+            }
+
+            return lResult;
+        }
+
+        public String Update(String ID, String Title)
+        {
+            String lResult = "";
+            String lSQL = "";
+            lSQL += "UPDATE T_Product_Class SET ";
+            lSQL += " Title='" + Title + "'";
+            lSQL += " WHERE ID='" + ID + "'";
+            lSQL += " AND Del='0'";
+
+            if (DBHelper.ExecuteSQL(lSQL) == EXESQLRET.SUCCESS)
+            {
+                lResult = "1";
+            }
+            else
+            {
+                lResult = "0";
             }
             return lResult;
         }

@@ -34,6 +34,9 @@ function PageTableColumn() {
 function PageTableButtonColumn() {
     //按钮标题
     this.mButtonCaption = "";
+
+    //单击事件处理程序
+    this.mClickEventHandler = new Object();
 }
 
 PageTableButtonColumn.prototype = PageTableColumn;
@@ -154,6 +157,7 @@ PageTable.prototype.GenerateHtml = function () {
                 var lBtn = $("<input type='button'/>");
                 lBtn.addClass("btn btn-info");
                 lBtn.attr("value", this.mColumns[j].mButtonCaption);
+                lBtn.on("click", null, {"RowData":this.mPageData[i]}, this.mColumns[j].mClickEventHandler);
                 lPageTableBodyTrTd.append(lBtn);
             }
 
