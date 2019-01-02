@@ -30,6 +30,10 @@
                 case "4":
                     $("#divContent").load("/ProductClass/Index");
                     break;
+
+                case "5":
+                    $("#divContent").load("/ProductCharacteristic/Index");
+                    break;
                 default:
                     break;
             }
@@ -48,6 +52,7 @@
                     <li><a href="#" onclick="MenuClick(this,'2');">产品</a></li>
                     <li><a href="#" onclick="MenuClick(this,'3');">订单</a></li>
                     <li><a href="#" onclick="MenuClick(this,'4');">产品分类</a></li>
+                    <li><a href="#" onclick="MenuClick(this,'5');">产品类型特征</a></li>
                 </ul>
             </div>
             <div style="width:80%;float:left;" id="divContent">

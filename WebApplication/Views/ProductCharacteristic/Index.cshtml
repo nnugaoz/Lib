@@ -1,0 +1,75 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <script type="text/javascript" src="~/Scripts/MyJsLib/MyPageList.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            Init();
+        });
+
+        function Init() {
+            var lColumns = new Array();
+
+            var lTypeCol = new PageTableColumn();
+            lTypeCol.mColumnHeaderText = "类型";
+            lTypeCol.mColumnDataSourceID = "Type";
+            lColumns.push(lTypeCol);
+
+            var lCharacteristicCol = new PageTableColumn();
+            lCharacteristicCol.mColumnHeaderText = "特征";
+            lCharacteristicCol.mColumnDataSourceID = "Characteristic";
+            lColumns.push(lCharacteristicCol);
+
+            var lEditCol = new PageTableButtonColumn();
+            lEditCol.mColumnHeaderText = "编辑";
+            lEditCol.mButtonCaption = "编辑";
+            lEditCol.mClickEventHandler = Edit_EventHandler;
+            lColumns.push(lEditCol);
+
+            var lDelCol = new PageTableButtonColumn();
+            lDelCol.mColumnHeaderText = "删除";
+            lDelCol.mButtonCaption = "删除";
+            lDelCol.mClickEventHandler = Del_EventHandler;
+            lColumns.push(lDelCol);
+
+            var lPageTable = new PageTable({
+                mTableDivID: "divPageTable"
+                ,
+                mPageIndexDivID: "divPageIndex"
+                ,
+                mRequestUrl: "/ProductCharacteristic/GetDataList"
+                ,
+                mRequestParams: new Object()
+                ,
+                mColumns: lColumns
+            });
+
+            lPageTable.LoadData(1);
+
+        }
+
+        function Edit_EventHandler(pData) {
+
+        }
+
+        function Del_EventHandler(pData) {
+
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <h1>产品类型特征列表</h1>
+        <div id="divPageTable"></div>
+        <div id="divPageIndex"></div>
+    </div>
+</body>
+</html>

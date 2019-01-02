@@ -154,6 +154,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\DistributorController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\ProductCharacteristicController.cs" />
     <Compile Include="Controllers\ProductClassController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -171,6 +172,7 @@
     <Content Include="Views\ProductClass\Index.cshtml" />
     <Content Include="Views\ProductClass\Add.cshtml" />
     <Content Include="Views\ProductClass\Edit.cshtml" />
+    <Content Include="Views\ProductCharacteristic\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
