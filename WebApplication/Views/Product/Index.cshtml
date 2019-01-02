@@ -2,9 +2,7 @@
 @{
     Layout = null;
 }
-
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -17,6 +15,54 @@
         });
 
         function Init() {
+            var lColumns = new Array();
+            var lCodeCol = new PageTableColumn();
+            lCodeCol.mColumnHeaderText = "产品编码";
+            lCodeCol.mColumnDataSourceID = "Code";
+            lColumns.push(lCodeCol);
+
+            var lNameCol = new PageTableColumn();
+            lNameCol.mColumnHeaderText = "产品全称";
+            lNameCol.mColumnDataSourceID = "Name";
+            lColumns.push(lNameCol);
+
+            var lShortNameCol = new PageTableColumn();
+            lShortNameCol.mColumnHeaderText = "产品简称";
+            lShortNameCol.mColumnDataSourceID = "ShortName";
+            lColumns.push(lShortNameCol);
+
+            var lTypeCol = new PageTableColumn();
+            lTypeCol.mColumnHeaderText = "产品类型";
+            lTypeCol.mColumnDataSourceID = "Type";
+            lColumns.push(lTypeCol);
+
+            var lVoltageCol = new PageTableColumn();
+            lVoltageCol.mColumnHeaderText = "电压等级";
+            lVoltageCol.mColumnDataSourceID = "Voltage";
+            lColumns.push(lVoltageCol);
+
+            var lSpecCol = new PageTableColumn();
+            lSpecCol.mColumnHeaderText = "产品规格";
+            lSpecCol.mColumnDataSourceID = "Spec";
+            lColumns.push(lSpecCol);
+
+            var lClassIDCol = new PageTableColumn();
+            lClassIDCol.mColumnHeaderText = "产品分类编码";
+            lClassIDCol.mColumnDataSourceID = "ClassID";
+            lColumns.push(lClassIDCol);
+
+            var lEditCol = new PageTableButtonColumn();
+            lEditCol.mColumnHeaderText = "编辑";
+            lEditCol.mButtonCaption = "编辑";
+            lEditCol.mClickEventHandler = Edit_EventHandler;
+            lColumns.push(lEditCol);
+
+            var lDelCol = new PageTableButtonColumn();
+            lDelCol.mColumnHeaderText = "删除";
+            lDelCol.mButtonCaption = "删除";
+            lDelCol.mClickEventHandler = Del_EventHandler;
+            lColumns.push(lDelCol);
+
             var lPageTable = new PageTable(
                 {
                     mTableDivID: "divProductList"
@@ -27,65 +73,28 @@
                     ,
                     mRequestParams: {}
                     ,
-                    mColumns: [
-                        {
-                            mColumnHeaderText: "产品编码"
-                            ,
-                            mColumnDataSourceID: "Code"
-                        }
-                        ,
-                        {
-                            mColumnHeaderText: "产品全称"
-                            ,
-                            mColumnDataSourceID: "Name"
-                        }
-                        ,
-                        {
-                            mColumnHeaderText: "产品简称"
-                            ,
-                            mColumnDataSourceID: "ShortName"
-                        }
-                        ,
-                        {
-                            mColumnHeaderText: "产品类型"
-                            ,
-                            mColumnDataSourceID: "Type"
-                        }
-                        ,
-                        {
-                            mColumnHeaderText: "电压等级"
-                            ,
-                            mColumnDataSourceID: "Voltage"
-                        }
-                        ,
-                        {
-                            mColumnHeaderText: "产品规格"
-                            ,
-                            mColumnDataSourceID: "Spec"
-                        }
-                        ,
-                        {
-                            mColumnHeaderText: "产品分类编码"
-                            ,
-                            mColumnDataSourceID: "ClassID"
-                        }
-                    ]
+                    mColumns: lColumns
                 }
                 );
             lPageTable.LoadData(1);
         }
 
-      
+        function Edit_EventHandler(pData) {
+
+        }
+
+        function Del_EventHandler(pData) {
+
+        }
+
     </script>
 </head>
 <body>
     <div style="margin:10px;">
         <h1>产品列表</h1>
         <div id="divProductList">
-
         </div>
         <div id="divPageIndex">
-
         </div>
     </div>
 </body>

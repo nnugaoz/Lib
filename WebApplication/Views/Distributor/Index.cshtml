@@ -15,6 +15,45 @@
         });
 
         function Init() {
+            var lColumns = new Array();
+
+            var lCodeCol = new PageTableColumn();
+            lCodeCol.mColumnHeaderText = "编码";
+            lCodeCol.mColumnDataSourceID = "Code";
+            lColumns.push(lCodeCol);
+
+            var lNameCol = new PageTableColumn();
+            lNameCol.mColumnHeaderText = "姓名";
+            lNameCol.mColumnDataSourceID = "Name";
+            lColumns.push(lNameCol);
+
+            var lProvinceCol = new PageTableColumn();
+            lProvinceCol.mColumnHeaderText = "省份";
+            lProvinceCol.mColumnDataSourceID = "Province";
+            lColumns.push(lProvinceCol);
+
+            var lAddressCol = new PageTableColumn();
+            lAddressCol.mColumnHeaderText = "地址";
+            lAddressCol.mColumnDataSourceID = "Address";
+            lColumns.push(lAddressCol);
+
+            var lTelephoneCol = new PageTableColumn();
+            lTelephoneCol.mColumnHeaderText = "联系电话";
+            lTelephoneCol.mColumnDataSourceID = "Telephone";
+            lColumns.push(lTelephoneCol);
+
+            var lEditCol = new PageTableButtonColumn();
+            lEditCol.mColumnHeaderText = "编辑";
+            lEditCol.mButtonCaption = "编辑";
+            lEditCol.mClickEventHandler = Edit_EventHandler;
+            lColumns.push(lEditCol);
+
+            var lDelCol = new PageTableButtonColumn();
+            lDelCol.mColumnHeaderText = "删除";
+            lDelCol.mButtonCaption = "删除";
+            lDelCol.mClickEventHandler = Del_EventHandler;
+            lColumns.push(lDelCol);
+
             var lPageTable = new PageTable(
                 {
                     mTableDivID: "divDistributorList"
@@ -25,42 +64,19 @@
                     ,
                     mRequestParams: {}
                     ,
-                    mColumns: [
-                        {
-                            mColumnHeaderText: "编码"
-                            ,
-                            mColumnDataSourceID: "Code"
-                        }
-                        ,
-                        {
-                            mColumnHeaderText: "姓名"
-                            ,
-                            mColumnDataSourceID: "Name"
-                        }
-                        ,
-                        {
-                            mColumnHeaderText: "省份"
-                            ,
-                            mColumnDataSourceID: "Province"
-                        }
-                        ,
-                        {
-                            mColumnHeaderText: "地址"
-                            ,
-                            mColumnDataSourceID: "Address"
-                        }
-                        ,
-                        {
-                            mColumnHeaderText: "联系电话"
-                            ,
-                            mColumnDataSourceID: "Telephone"
-                        }
-                    ]
+                    mColumns: lColumns
                 }
                 );
             lPageTable.LoadData(1);
         }
 
+        function Edit_EventHandler(pData) {
+
+        }
+
+        function Del_EventHandler(pData) {
+
+        }
 
     </script>
 </head>

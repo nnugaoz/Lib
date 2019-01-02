@@ -14,6 +14,65 @@
         });
 
         function Init() {
+            var lColumns = new Array();
+
+            var lIDCol = new PageTableColumn();
+            lIDCol.mColumnHeaderText = "订单号";
+            lIDCol.mColumnDataSourceID = "ID";
+            lColumns.push(lIDCol);
+
+            var lCustomerCodeCol = new PageTableColumn();
+            lCustomerCodeCol.mColumnHeaderText = "客商编号";
+            lCustomerCodeCol.mColumnDataSourceID = "CustomerCode";
+            lColumns.push(lCustomerCodeCol);
+
+            var lDistributorCodeCol = new PageTableColumn();
+            lDistributorCodeCol.mColumnHeaderText = "经销商编号";
+            lDistributorCodeCol.mColumnDataSourceID = "DistributorCode";
+            lColumns.push(lDistributorCodeCol);
+
+            var lSubmitDateCol = new PageTableColumn();
+            lSubmitDateCol.mColumnHeaderText = "订单提交日期";
+            lSubmitDateCol.mColumnDataSourceID = "SubmitDate";
+            lColumns.push(lSubmitDateCol);
+
+            var lSubmitManCol = new PageTableColumn();
+            lSubmitManCol.mColumnHeaderText = "下单人";
+            lSubmitManCol.mColumnDataSourceID = "SubmitDate";
+            lColumns.push(lSubmitManCol);
+
+            var lRecAddressCol = new PageTableColumn();
+            lRecAddressCol.mColumnHeaderText = "收货地址";
+            lRecAddressCol.mColumnDataSourceID = "RecAddress";
+            lColumns.push(lRecAddressCol);
+
+            var lDeliveryDateCol = new PageTableColumn();
+            lDeliveryDateCol.mColumnHeaderText = "预计发货日期";
+            lDeliveryDateCol.mColumnDataSourceID = "DeliveryDate";
+            lColumns.push(lDeliveryDateCol);
+
+            var lMoneyCol = new PageTableColumn();
+            lMoneyCol.mColumnHeaderText = "订单金额";
+            lMoneyCol.mColumnDataSourceID = "Money";
+            lColumns.push(lMoneyCol);
+
+            var lInvoiceMoneyCol = new PageTableColumn();
+            lInvoiceMoneyCol.mColumnHeaderText = "开票金额";
+            lInvoiceMoneyCol.mColumnDataSourceID = "Money";
+            lColumns.push(lInvoiceMoneyCol);
+
+            var lEditCol = new PageTableButtonColumn();
+            lEditCol.mColumnHeaderText = "编辑";
+            lEditCol.mButtonCaption = "编辑";
+            lEditCol.mClickEventHandler = Edit_EventHandler;
+            lColumns.push(lEditCol);
+
+            var lDelCol = new PageTableButtonColumn();
+            lDelCol.mColumnHeaderText = "删除";
+            lDelCol.mButtonCaption = "删除";
+            lDelCol.mClickEventHandler = Del_EventHandler;
+            lColumns.push(lDelCol);
+
             var lPageTable = new PageTable(
                 {
                     mTableDivID: "divList"
@@ -24,70 +83,24 @@
                     ,
                     mRequestParams: {}
                     ,
-                    mColumns: [
-                        {
-                            mColumnHeaderText: "订单号"
-                            ,
-                            mColumnDataSourceID: "ID"
-                        }
-                        ,
-                        {
-                            mColumnHeaderText: "客商编号"
-                            ,
-                            mColumnDataSourceID: "CustomerCode"
-                        }
-                        ,
-                        {
-                            mColumnHeaderText: "经销商编号"
-                            ,
-                            mColumnDataSourceID: "DistributorCode"
-                        }
-                        ,
-                        {
-                            mColumnHeaderText: "订单提交日期"
-                            ,
-                            mColumnDataSourceID: "SubmitDate"
-                        }
-                        ,
-                        {
-                            mColumnHeaderText: "下单人"
-                            ,
-                            mColumnDataSourceID: "SubmitMan"
-                        }
-                        ,
-                        {
-                            mColumnHeaderText: "收货地址"
-                            ,
-                            mColumnDataSourceID: "RecAddress"
-                        }
-                        ,
-                        {
-                            mColumnHeaderText: "预计发货日期"
-                            ,
-                            mColumnDataSourceID: "DeliveryDate"
-                        }
-                        ,
-                        {
-                            mColumnHeaderText: "订单金额"
-                            ,
-                            mColumnDataSourceID: "Money"
-                        }
-                        ,
-                        {
-                            mColumnHeaderText: "开票金额"
-                            ,
-                            mColumnDataSourceID: "InvoiceMoney"
-                        }
-                    ]
+                    mColumns: lColumns
                 }
                 );
             lPageTable.LoadData(1);
+        }
+
+        function Edit_EventHandler(pData) {
+
+        }
+
+        function Del_EventHandler(pData) {
+
         }
     </script>
 </head>
 <body>
     <div>
-        <h1>Order List</h1>
+        <h1>订单列表</h1>
         <div id="divList" style="margin:10px;">
         </div>
         <div id="divPageIndex" style="margin:10px">

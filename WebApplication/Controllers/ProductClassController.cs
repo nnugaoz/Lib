@@ -75,7 +75,7 @@ namespace WebApplication.Controllers
             return lResult;
         }
 
-        public String GetListData()
+        public String GetListData(String begin_index, string end_index)
         {
             String lResult = "";
             String lSQL = "";
@@ -89,6 +89,7 @@ namespace WebApplication.Controllers
             lSQL += "           T_Product_Class";
             lSQL += "    WHERE";
             lSQL += "           DEL='0'";
+            lSQL += "    SELECT * FROM(";
             lSQL += "    SELECT";
             lSQL += "             @RowCnt                       RowCnt";
             lSQL += "           , ROW_NUMBER()OVER(ORDER BY ID) SerNO";
@@ -98,6 +99,8 @@ namespace WebApplication.Controllers
             lSQL += "             T_Product_Class";
             lSQL += "    WHERE";
             lSQL += "             DEL='0'";
+            lSQL += ")T";
+            lSQL += "             WHERE SerNO >= " + begin_index + " AND SerNO <= " + end_index;
 
             if (DBHelper.GetDataTable(lSQL, ref lDT) == EXESQLRET.SUCCESS)
             {
