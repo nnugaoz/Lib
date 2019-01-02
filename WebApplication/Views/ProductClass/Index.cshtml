@@ -7,6 +7,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
+    <script type="text/javascript" src="~/Scripts/MyJsLib/MyJsLib.js"></script>
     <script type="text/javascript" src="~/Scripts/MyJsLib/MyPageList.js"></script>
     <script type="text/javascript">
 
@@ -59,16 +60,30 @@
         }
 
         function Del_EventHandler(pData) {
+            var lRowData = pData.data.RowData;
             //询问框
-            layer.confirm('您确认删除吗？', {
+            var lIndex = layer.confirm('您确认删除吗？', {
                 btn: ['确认', '取消'] //按钮
             }, function () {
-                layer.msg('的确很重要', { icon: 1 });
-            }, function () {
-                layer.msg('也可以这样', {
-                    time: 20000, //20s后自动关闭
-                    btn: ['明白了', '知道了']
+                MyAjax({
+                    type: "post"
+                    ,
+                    url: "/ProductClass/Del"
+                    ,
+                    data: { "ID": lRowData.ID }
+                    ,
+                    fnSuccess: function (pData) {
+                        if (pData == "1") {
+                            layer.alert("删除成功！", { icon: 1 });
+                            Init();
+                        }
+                        else {
+                            layer.alert("删除失败！", { icon: 2 });
+                        }
+                    }
                 });
+            }, function () {
+
             });
         }
     </script>

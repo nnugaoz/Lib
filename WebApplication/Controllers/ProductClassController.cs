@@ -146,5 +146,25 @@ namespace WebApplication.Controllers
             }
             return lResult;
         }
+
+        public String Del(String ID)
+        {
+            String lResult = "";
+            String lSQL = "";
+            lSQL += "UPDATE T_Product_Class SET ";
+            lSQL += " Del='1'";
+            lSQL += " WHERE ID='" + ID + "'";
+            lSQL += " AND Del='0'";
+
+            if (DBHelper.ExecuteSQL(lSQL) == EXESQLRET.SUCCESS)
+            {
+                lResult = "1";
+            }
+            else
+            {
+                lResult = "0";
+            }
+            return lResult;
+        }
     }
 }
