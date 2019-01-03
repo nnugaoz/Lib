@@ -93,8 +93,8 @@ PageTable.prototype.LoadData = function (pIndex) {
     var lPageTable = this;
     var llayerIndex = 0;
     llayerIndex = layer.load();
-    this.mRequestParams.begin_index = (this.mPageIndex.mCurrentIndex - 1) * 10 + 1;
-    this.mRequestParams.end_index = (this.mPageIndex.mCurrentIndex) * 10;
+    this.mRequestParams.begin_index = (this.mPageIndex.mCurrentIndex - 1) * this.mPageIndex.mPageSize + 1;
+    this.mRequestParams.end_index = (this.mPageIndex.mCurrentIndex) * this.mPageIndex.mPageSize;
 
     $.ajax(
         {
