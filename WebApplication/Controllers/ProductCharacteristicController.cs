@@ -23,30 +23,41 @@ namespace WebApplication.Controllers
             String lSQL = "";
             DataTable lDT = null;
 
-            lSQL += " DECLARE";
-            lSQL += "         @row_count INT";
-            lSQL += "         SELECT";
-            lSQL += "                 @row_count=COUNT(*)";
-            lSQL += "         FROM";
-            lSQL += "                 T_Product_Characteristic";
-            lSQL += "         WHERE";
-            lSQL += "                 Del='0'";
-            lSQL += "         SELECT *";
-            lSQL += "         FROM";
-            lSQL += "                 (";
-            lSQL += "                         SELECT";
-            lSQL += "                                 ROW_NUMBER()OVER(ORDER BY ID) i      ,";
-            lSQL += "                                 @row_count                    RowCnt ,";
-            lSQL += "                                 ID                                   ,";
-            lSQL += "                                 Type                                 ,";
-            lSQL += "                                 Characteristic";
-            lSQL += "                         FROM";
-            lSQL += "                                 T_Product_Characteristic";
-            lSQL += "                         WHERE";
-            lSQL += "                                 Del='0')T";
-            lSQL += "         WHERE";
-            lSQL += "                 i>=" + begin_index;
-            lSQL += "         AND     i<=" + end_index;
+            lSQL += "DECLARE @row_count INT";
+            lSQL += " SELECT @row_count=COUNT(*) FROM T_Product_Characteristic WHERE Del='0'";
+
+            lSQL += " SELECT";
+            lSQL += "        ID,";
+            lSQL += "        Type,";
+            lSQL += "        Characteristic,";
+            lSQL += "        @row_count RowCnt";
+            lSQL += " FROM";
+            lSQL += "        T_Product_Characteristic";
+            lSQL += " WHERE";
+            lSQL += "        Type IN";
+            lSQL += "        (";
+            lSQL += "                SELECT";
+            lSQL += "                        Type";
+            lSQL += "                FROM";
+            lSQL += "                        (";
+            lSQL += "                                SELECT";
+            lSQL += "                                        ROW_NUMBER()OVER(ORDER BY Type) i ,";
+            lSQL += "                                        Type";
+            lSQL += "                                FROM";
+            lSQL += "                                        (";
+            lSQL += "                                                SELECT DISTINCT";
+            lSQL += "                                                        Type";
+            lSQL += "                                                FROM";
+            lSQL += "                                                        T_Product_Characteristic";
+            lSQL += "                                                WHERE";
+            lSQL += "                                                        Del='0') T1)T2";
+            lSQL += "                WHERE";
+            lSQL += "                        i>=" + begin_index;
+            lSQL += "                AND     i<=" + end_index + " )";
+            lSQL += " AND     Del='0'";
+            lSQL += " ORDER BY";
+            lSQL += "        Type,";
+            lSQL += "        Characteristic";
 
             if (DBHelper.GetDataTable(lSQL, ref lDT) == EXESQLRET.SUCCESS)
             {
