@@ -75,36 +75,55 @@ namespace WebApplication.Controllers
             return lResult;
         }
 
-        public String GetListData(String begin_index, string end_index)
+        public String GetListData(String page_index, string page_size)
         {
             String lResult = "";
             String lSQL = "";
             DataTable lDT = null;
+            Int32 lPageIndex = 0;
+            Int32 lPageSize = 0;
+            Int32 lRowCount = 0;
+            Int32 lPageCount = 0;
+            Int32 lBegin_Index = 0;
+            Int32 lEnd_Index = 0;
 
-            lSQL += "DECLARE";
-            lSQL += "    @RowCnt INT";
-            lSQL += "    SELECT";
-            lSQL += "           @RowCnt=COUNT(*)";
+            lPageIndex = Convert.ToInt32(page_index);
+            lPageSize = Convert.ToInt32(page_size);
+
+            lSQL = "    SELECT";
+            lSQL += "           COUNT(*)";
             lSQL += "    FROM";
             lSQL += "           T_Product_Class";
             lSQL += "    WHERE";
             lSQL += "           DEL='0'";
-            lSQL += "    SELECT * FROM(";
-            lSQL += "    SELECT";
-            lSQL += "             @RowCnt                       RowCnt";
-            lSQL += "           , ROW_NUMBER()OVER(ORDER BY ID) SerNO";
-            lSQL += "           , ID";
-            lSQL += "           , Title";
-            lSQL += "    FROM";
-            lSQL += "             T_Product_Class";
-            lSQL += "    WHERE";
-            lSQL += "             DEL='0'";
-            lSQL += ")T";
-            lSQL += "             WHERE SerNO >= " + begin_index + " AND SerNO <= " + end_index;
-
             if (DBHelper.GetDataTable(lSQL, ref lDT) == EXESQLRET.SUCCESS)
             {
-                lResult = ConvertToJson.FromDataTable(lDT);
+                lRowCount = Convert.ToInt32(lDT.Rows[0][0].ToString());
+                lPageCount = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(lRowCount) / Convert.ToDouble(page_size)));
+
+                lBegin_Index = (lPageIndex - 1) * lPageSize + 1;
+                lEnd_Index = lPageIndex * lPageSize;
+
+                lSQL = "    SELECT * FROM(";
+                lSQL += "    SELECT ";
+                lSQL += "            " + lRowCount + "   RowCnt";
+                lSQL += "           ," + lPageCount + " PageCnt";
+                lSQL += "           ," + lBegin_Index + " BeginIndex";
+                lSQL += "           ," + lEnd_Index + " EndIndex";
+                lSQL += "           , ROW_NUMBER()OVER(ORDER BY ID) SerNO";
+                lSQL += "           , ID";
+                lSQL += "           , Title";
+                lSQL += "    FROM";
+                lSQL += "             T_Product_Class";
+                lSQL += "    WHERE";
+                lSQL += "             DEL='0'";
+                lSQL += ")T";
+                lSQL += "             WHERE SerNO >= " + lBegin_Index + " AND SerNO <= " + lEnd_Index;
+
+                if (DBHelper.GetDataTable(lSQL, ref lDT) == EXESQLRET.SUCCESS)
+                {
+                    lResult = ConvertToJson.FromDataTable(lDT);
+                }
             }
             return lResult;
         }

@@ -81,7 +81,14 @@ function PageIndex() {
     this.mPageSize = 10;
 
     //总页数
+    //20190105 页面总数由服务端返回
     this.mPageCount = 0;
+
+    //页面列表起始行下标
+    this.mBeginIndex = 0;
+
+    //页面列表终了行下标
+    this.mEndIndex = 0;
 
     //表格对象
     this.mPageTable = new Object();
@@ -93,9 +100,12 @@ PageTable.prototype.LoadData = function (pIndex) {
     var lPageTable = this;
     var llayerIndex = 0;
     llayerIndex = layer.load();
-    this.mRequestParams.begin_index = (this.mPageIndex.mCurrentIndex - 1) * this.mPageIndex.mPageSize + 1;
-    this.mRequestParams.end_index = (this.mPageIndex.mCurrentIndex) * this.mPageIndex.mPageSize;
-
+    //Del 20190105 分页列表，传入后台的参数，改为页码page_index和页面大小page_size，删除原来传递的开始，终了记录下标。
+    //原因是：页数并非都是按照记录总数/页面大小来计算的。
+    //this.mRequestParams.begin_index = (this.mPageIndex.mCurrentIndex - 1) * this.mPageIndex.mPageSize + 1;
+    //this.mRequestParams.end_index = (this.mPageIndex.mCurrentIndex) * this.mPageIndex.mPageSize;
+    this.mRequestParams.page_index = pIndex;
+    this.mRequestParams.page_size = this.mPageIndex.mPageSize;
     $.ajax(
         {
             "type": "get"
@@ -157,7 +167,7 @@ PageTable.prototype.GenerateHtml = function () {
                 var lBtn = $("<input type='button'/>");
                 lBtn.addClass("btn btn-info");
                 lBtn.attr("value", this.mColumns[j].mButtonCaption);
-                lBtn.on("click", null, {"RowData":this.mPageData[i]}, this.mColumns[j].mClickEventHandler);
+                lBtn.on("click", null, { "RowData": this.mPageData[i] }, this.mColumns[j].mClickEventHandler);
                 lPageTableBodyTrTd.append(lBtn);
             }
 
@@ -175,8 +185,12 @@ PageIndex.prototype.GenerateHtml = function () {
 
         //返回的代表每条数据的JSON对象中，必须包括RowCnt成员！！！！！
         this.mRowCount = this.mPageTable.mPageData[0].RowCnt;
+        this.mPageCount = this.mPageTable.mPageData[0].PageCnt;
+        this.mBeginIndex = this.mPageTable.mPageData[0].BeginIndex;
+        this.mEndIndex = this.mPageTable.mPageData[0].EndIndex;
 
-        this.mPageCount = Math.ceil(this.mRowCount / this.mPageSize);
+        //20190105 页面总数由服务端返回
+        //this.mPageCount = Math.ceil(this.mRowCount / this.mPageSize);
         var lPageIndexNav = $("<nav></nav>");
         var lPageIndexNav_Ul = $("<ul></ul>");
         var lPageIndexNav_Ul_Li = $("<li></li>");

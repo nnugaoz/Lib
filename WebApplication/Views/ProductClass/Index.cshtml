@@ -24,6 +24,7 @@
             var lEditColumn = new PageTableButtonColumn();
             lEditColumn.mColumnHeaderText = "";
             lEditColumn.mColumnDataSourceID = "";
+            debugger;
             lEditColumn.mClickEventHandler = Edit_EventHandler;
             lEditColumn.mButtonCaption = "编辑";
             lColumns.push(lEditColumn);
@@ -54,13 +55,8 @@
             $("#divContent").load("/ProductClass/Add");
         }
 
-        function Edit_EventHandler(pData) {
-            var lRowData = pData.data.RowData;
-            $("#divContent").load("/ProductClass/Edit?ID=" + lRowData.ID);
-        }
-
-        function Del_EventHandler(pData) {
-            var lRowData = pData.data.RowData;
+        function Del_EventHandler(pParams) {
+            var lRowData = pParams.data.RowData;
             //询问框
             var lIndex = layer.confirm('您确认删除吗？', {
                 btn: ['确认', '取消'] //按钮
@@ -85,6 +81,11 @@
             }, function () {
 
             });
+        }
+
+        function Edit_EventHandler(pParams) {
+            var lRowData = pParams.data.RowData;
+            $("#divContent").load("/ProductClass/Edit?ID=" + lRowData.ID);
         }
     </script>
 </head>
