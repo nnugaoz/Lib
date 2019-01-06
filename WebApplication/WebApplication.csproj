@@ -173,6 +173,7 @@
     <Content Include="Views\ProductClass\Add.cshtml" />
     <Content Include="Views\ProductClass\Edit.cshtml" />
     <Content Include="Views\ProductCharacteristic\Index.cshtml" />
+    <Content Include="Views\ProductCharacteristic\Add.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

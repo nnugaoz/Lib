@@ -17,6 +17,16 @@ namespace WebApplication.Controllers
             return View();
         }
 
+        public ActionResult Add()
+        {
+            return View();
+        }
+
+        public ActionResult Edit()
+        {
+            return View();
+        }
+
         public String GetDataList(String page_index, string page_size)
         {
             String lResult = "";
@@ -96,5 +106,7 @@ namespace WebApplication.Controllers
 
             return lResult;
         }
+
+
     }
 }

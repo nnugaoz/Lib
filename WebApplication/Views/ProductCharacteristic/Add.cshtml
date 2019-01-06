@@ -1,0 +1,61 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add</title>
+    <script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#formAdd").validate(
+                {
+                    rules: {
+                        txtProductType: "required"
+                        ,
+                        txtCharacteristic: "required"
+                    }
+                    ,
+                    messages: {
+                        txtProductType: "请输入类型！"
+                        ,
+                        txtCharacteristic: "请输入类型特征！"
+                    }
+                }
+                );
+        });
+
+        function Add_EventHandler() {
+            if ($("#formAdd").valid()) {
+                alert("验证通过！");
+            }
+            else {
+                alert("验证未通过!");
+            }
+        }
+
+        function Cancel_EventHandler() {
+            $("#divContent").load("/ProductCharacteristic/Index");
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <h1>新增产品类型特征</h1>
+        <form id="formAdd">
+            <div class="form-group">
+                <label for="txtProductType">产品类型</label>
+                <input type="text" id="txtProductType" class="form-control" name="txtProductType" />
+                <label for="txtCharacteristic">产品特征</label>
+                <input type="text" id="txtCharacteristic" class="form-control" name="txtCharacteristic" />
+            </div>
+            <input type="button" id="btnSave" value="保存" class="btn btn-primary" onclick="Add_EventHandler();" />
+            <input type="button" id="btnCancel" value="取消" class="btn" onclick="Cancel_EventHandler();" />
+        </form>
+    </div>
+</body>
+</html>

@@ -61,12 +61,16 @@
         function Del_EventHandler(pData) {
 
         }
+
+        function Add_EventHandler() {
+            $("#divContent").load("/ProductCharacteristic/Add");
+        }
     </script>
 </head>
 <body>
     <div>
         <h1>产品类型特征列表</h1>
-        <input type="button" value="新增" class="btn btn-primary" style="float:right;" />
+        <input type="button" value="新增" class="btn btn-primary" style="float:right;" onclick="Add_EventHandler();" />
         <div id="divPageTable"></div>
         <div id="divPageIndex"></div>
     </div>
