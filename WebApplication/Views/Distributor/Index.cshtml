@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
 <!DOCTYPE html>
@@ -71,7 +70,13 @@
         }
 
         function Edit_EventHandler(pData) {
+            layer.open({
+                type: 2,
+                title: '编辑经销商信息',
+                area: ['1000px', '800px'],
+                content: '/Distributor/Add'
 
+            });
         }
 
         function Del_EventHandler(pData) {

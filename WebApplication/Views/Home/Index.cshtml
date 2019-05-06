@@ -11,6 +11,8 @@
     <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="~/Content/layer/layer.js"></script>
     <script type="text/javascript">
+
+        //菜单单击事件处理程序
         function MenuClick(obj, param) {
             $(obj).parent().siblings().removeClass("active");
             $(obj).parent().addClass("active");
@@ -38,6 +40,12 @@
                     break;
             }
         }
+
+        $(function () {
+
+            //默认加载经销商列表页面
+            $("#divContent").load("/Distributor/Index");
+        });
     </script>
 </head>
 <body>
@@ -48,11 +56,11 @@
         <div>
             <div style="width:20%;float:left;">
                 <ul class="nav nav-pills nav-stacked">
-                    <li class="active"><a href="#" onclick="MenuClick(this,'1');">经销商</a></li>
-                    <li><a href="#" onclick="MenuClick(this,'2');">产品</a></li>
-                    <li><a href="#" onclick="MenuClick(this,'3');">订单</a></li>
-                    <li><a href="#" onclick="MenuClick(this,'4');">产品分类</a></li>
-                    <li><a href="#" onclick="MenuClick(this,'5');">产品类型特征</a></li>
+                    <li class="active"><a href="javascript:void(0);" onclick="MenuClick(this,'1');">经销商</a></li>
+                    <li><a href="javascript:void(0);" onclick="MenuClick(this,'2');">产品</a></li>
+                    <li><a href="javascript:void(0);" onclick="MenuClick(this,'3');">订单</a></li>
+                    <li><a href="javascript:void(0);" onclick="MenuClick(this,'4');">产品分类</a></li>
+                    <li><a href="javascript:void(0);" onclick="MenuClick(this,'5');">产品类型特征</a></li>
                 </ul>
             </div>
             <div style="width:80%;float:left;" id="divContent">

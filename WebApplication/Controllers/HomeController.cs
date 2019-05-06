@@ -10,6 +10,7 @@ namespace WebApplication.Controllers
     {
         //
         // GET: /Home/
+        //应用程序首页
         public ActionResult Index()
         {
             return View();

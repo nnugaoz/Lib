@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="LibModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“Lib.dbo.T_Distributor”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="T_Distributor">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="OrgID" Type="varchar" MaxLength="100" />
+          <Property Name="Code" Type="varchar" MaxLength="50" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Province" Type="varchar" MaxLength="255" />
+          <Property Name="Trade" Type="varchar" MaxLength="255" />
+          <Property Name="Address" Type="varchar" MaxLength="500" />
+          <Property Name="ZipCode" Type="varchar" MaxLength="50" />
+          <Property Name="Telephone" Type="varchar" MaxLength="100" />
+          <Property Name="Fax" Type="varchar" MaxLength="100" />
+          <Property Name="Credit" Type="numeric" Precision="20" Scale="8" />
+          <Property Name="Arrears" Type="numeric" Precision="20" Scale="8" />
+          <Property Name="Extra" Type="numeric" Precision="20" Scale="8" />
+          <Property Name="Temporary" Type="numeric" Precision="20" Scale="8" />
+          <Property Name="Validity" Type="datetime" />
+          <Property Name="PayMode" Type="varchar" MaxLength="1" />
+          <Property Name="Remark" Type="varchar" MaxLength="3000" />
+          <Property Name="Del" Type="bit" />
+          <Property Name="EditDate" Type="datetime" />
+          <Property Name="EditMan" Type="varchar" MaxLength="20" />
+          <Property Name="CreditAmount" Type="numeric" Precision="20" Scale="8" />
+          <Property Name="ExtraEndTime" Type="datetime" />
+          <Property Name="Xded" Type="numeric" Precision="20" Scale="8" />
+          <Property Name="Jyst" Type="varchar" MaxLength="200" />
+          <Property Name="Sj" Type="varchar" MaxLength="50" />
+          <Property Name="Wx" Type="varchar" MaxLength="50" />
+          <Property Name="Qktx" Type="bit" />
+          <Property Name="Qktxfs" Type="varchar" MaxLength="50" />
+          <Property Name="Tzshtx" Type="bit" />
+          <Property Name="Tzshtxfs" Type="varchar" MaxLength="50" />
+          <Property Name="Ddsh" Type="bit" />
+          <Property Name="Sfyh" Type="bit" />
+          <Property Name="Sfkpyh" Type="bit" />
+          <Property Name="Cblbscfhd" Type="bit" />
+          <Property Name="Cqkztfh" Type="bit" />
+          <Property Name="CustomWarehouse" Type="bit" />
+          <Property Name="Zqndxse" Type="numeric" Precision="20" Scale="8" />
+        </EntityType>
+        <EntityContainer Name="LibModelStoreContainer">
+          <EntitySet Name="T_Distributor" EntityType="Self.T_Distributor" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [T_Distributor].[ID] AS [ID], 
+    [T_Distributor].[OrgID] AS [OrgID], 
+    [T_Distributor].[Code] AS [Code], 
+    [T_Distributor].[Name] AS [Name], 
+    [T_Distributor].[Province] AS [Province], 
+    [T_Distributor].[Trade] AS [Trade], 
+    [T_Distributor].[Address] AS [Address], 
+    [T_Distributor].[ZipCode] AS [ZipCode], 
+    [T_Distributor].[Telephone] AS [Telephone], 
+    [T_Distributor].[Fax] AS [Fax], 
+    [T_Distributor].[Credit] AS [Credit], 
+    [T_Distributor].[Arrears] AS [Arrears], 
+    [T_Distributor].[Extra] AS [Extra], 
+    [T_Distributor].[Temporary] AS [Temporary], 
+    [T_Distributor].[Validity] AS [Validity], 
+    [T_Distributor].[PayMode] AS [PayMode], 
+    [T_Distributor].[Remark] AS [Remark], 
+    [T_Distributor].[Del] AS [Del], 
+    [T_Distributor].[EditDate] AS [EditDate], 
+    [T_Distributor].[EditMan] AS [EditMan], 
+    [T_Distributor].[CreditAmount] AS [CreditAmount], 
+    [T_Distributor].[ExtraEndTime] AS [ExtraEndTime], 
+    [T_Distributor].[Xded] AS [Xded], 
+    [T_Distributor].[Jyst] AS [Jyst], 
+    [T_Distributor].[Sj] AS [Sj], 
+    [T_Distributor].[Wx] AS [Wx], 
+    [T_Distributor].[Qktx] AS [Qktx], 
+    [T_Distributor].[Qktxfs] AS [Qktxfs], 
+    [T_Distributor].[Tzshtx] AS [Tzshtx], 
+    [T_Distributor].[Tzshtxfs] AS [Tzshtxfs], 
+    [T_Distributor].[Ddsh] AS [Ddsh], 
+    [T_Distributor].[Sfyh] AS [Sfyh], 
+    [T_Distributor].[Sfkpyh] AS [Sfkpyh], 
+    [T_Distributor].[Cblbscfhd] AS [Cblbscfhd], 
+    [T_Distributor].[Cqkztfh] AS [Cqkztfh], 
+    [T_Distributor].[CustomWarehouse] AS [CustomWarehouse], 
+    [T_Distributor].[Zqndxse] AS [Zqndxse]
+    FROM [dbo].[T_Distributor] AS [T_Distributor]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LibModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="T_Distributor">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OrgID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Province" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Trade" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ZipCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Telephone" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Fax" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Credit" Type="Decimal" Precision="20" Scale="8" />
+          <Property Name="Arrears" Type="Decimal" Precision="20" Scale="8" />
+          <Property Name="Extra" Type="Decimal" Precision="20" Scale="8" />
+          <Property Name="Temporary" Type="Decimal" Precision="20" Scale="8" />
+          <Property Name="Validity" Type="DateTime" Precision="3" />
+          <Property Name="PayMode" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Remark" Type="String" MaxLength="3000" FixedLength="false" Unicode="false" />
+          <Property Name="Del" Type="Boolean" />
+          <Property Name="EditDate" Type="DateTime" Precision="3" />
+          <Property Name="EditMan" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreditAmount" Type="Decimal" Precision="20" Scale="8" />
+          <Property Name="ExtraEndTime" Type="DateTime" Precision="3" />
+          <Property Name="Xded" Type="Decimal" Precision="20" Scale="8" />
+          <Property Name="Jyst" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Sj" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Wx" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Qktx" Type="Boolean" />
+          <Property Name="Qktxfs" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Tzshtx" Type="Boolean" />
+          <Property Name="Tzshtxfs" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Ddsh" Type="Boolean" />
+          <Property Name="Sfyh" Type="Boolean" />
+          <Property Name="Sfkpyh" Type="Boolean" />
+          <Property Name="Cblbscfhd" Type="Boolean" />
+          <Property Name="Cqkztfh" Type="Boolean" />
+          <Property Name="CustomWarehouse" Type="Boolean" />
+          <Property Name="Zqndxse" Type="Decimal" Precision="20" Scale="8" />
+        </EntityType>
+        <EntityContainer Name="LibEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="T_Distributor" EntityType="Self.T_Distributor" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LibModelStoreContainer" CdmEntityContainer="LibEntities">
+          <EntitySetMapping Name="T_Distributor">
+            <EntityTypeMapping TypeName="LibModel.T_Distributor">
+              <MappingFragment StoreEntitySet="T_Distributor">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="OrgID" ColumnName="OrgID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="Trade" ColumnName="Trade" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Credit" ColumnName="Credit" />
+                <ScalarProperty Name="Arrears" ColumnName="Arrears" />
+                <ScalarProperty Name="Extra" ColumnName="Extra" />
+                <ScalarProperty Name="Temporary" ColumnName="Temporary" />
+                <ScalarProperty Name="Validity" ColumnName="Validity" />
+                <ScalarProperty Name="PayMode" ColumnName="PayMode" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="Del" ColumnName="Del" />
+                <ScalarProperty Name="EditDate" ColumnName="EditDate" />
+                <ScalarProperty Name="EditMan" ColumnName="EditMan" />
+                <ScalarProperty Name="CreditAmount" ColumnName="CreditAmount" />
+                <ScalarProperty Name="ExtraEndTime" ColumnName="ExtraEndTime" />
+                <ScalarProperty Name="Xded" ColumnName="Xded" />
+                <ScalarProperty Name="Jyst" ColumnName="Jyst" />
+                <ScalarProperty Name="Sj" ColumnName="Sj" />
+                <ScalarProperty Name="Wx" ColumnName="Wx" />
+                <ScalarProperty Name="Qktx" ColumnName="Qktx" />
+                <ScalarProperty Name="Qktxfs" ColumnName="Qktxfs" />
+                <ScalarProperty Name="Tzshtx" ColumnName="Tzshtx" />
+                <ScalarProperty Name="Tzshtxfs" ColumnName="Tzshtxfs" />
+                <ScalarProperty Name="Ddsh" ColumnName="Ddsh" />
+                <ScalarProperty Name="Sfyh" ColumnName="Sfyh" />
+                <ScalarProperty Name="Sfkpyh" ColumnName="Sfkpyh" />
+                <ScalarProperty Name="Cblbscfhd" ColumnName="Cblbscfhd" />
+                <ScalarProperty Name="Cqkztfh" ColumnName="Cqkztfh" />
+                <ScalarProperty Name="CustomWarehouse" ColumnName="CustomWarehouse" />
+                <ScalarProperty Name="Zqndxse" ColumnName="Zqndxse" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
